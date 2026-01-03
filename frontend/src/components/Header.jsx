@@ -78,7 +78,7 @@ const Header = () => {
           <button onClick={() => scrollToSection('trainers')} className="mobile-nav-link">Trainers</button>
           <button onClick={() => scrollToSection('membership')} className="mobile-nav-link">Membership</button>
           <button onClick={() => scrollToSection('contact')} className="mobile-nav-link">Contact</button>
-          <a href="tel:8668891406" className="btn-primary" style={{ width: '100%', marginTop: '20px' }}>
+          <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: '100%', marginTop: '20px' }}>
             Join Now
           </a>
         </div>
