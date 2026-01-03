@@ -211,4 +211,37 @@
   .footer-copyright {
     font-size: 0.85rem;
   }
+  .footer-contact-link {
+  cursor: pointer;
+}
+
+.footer-contact-link:hover {
+  text-decoration: underline;
+}
+/* Footer LinkedIn Name – Subtle Button Style */
+.footer-linkedin {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  margin-left: 4px;
+
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  color: #d9fb06;
+  text-decoration: none;
+
+  background: rgba(217, 251, 6, 0.12);
+  border: 1px solid rgba(217, 251, 6, 0.25);
+  border-radius: 10px;
+
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.footer-linkedin:hover {
+  background: rgba(217, 251, 6, 0.2);
+  transform: translateY(-1px);
+}
+
 }

@@ -177,16 +177,17 @@ const Contact = () => {
                 <h4 className="map-title">Visit Us</h4>
               </div>
               <div className="map-container">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.2867834937736!2d75.32881607507799!3d19.890906581590873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb9860ffad066b%3A0x7c4e02db23c7c5e1!2sTTZ%20FITNESS%2024!5e0!3m2!1sen!2sin!4v1703000000000!5m2!1sen!2sin"
-                  width="100%"
-                  height="300"
-                  style={{ border: 0, borderRadius: '12px' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="TTZ Fitness Location"
-                ></iframe>
+                <div className="contact-map">
+  <a
+    href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUyCggAEEUYFhgeGDkyCAgBEAAYFhgeMg0IAhAAGIYDGIAEGIoFMg0IAxAAGIYDGIAEGIoFMgoIBBAAGIAEGKIEMgoIBRAAGIAEGKIEMgcIBhAAGO8FMgoIBxAAGIAEGKIE0gEIMzc4OGowajSoAgCwAgE&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KfUHz6KEmds7MZui6ltRJ_1G&daddr=11,+Gut+No.+142,+Plot+no-+77,+18,+near+Ayyappa+Swami+Temple,+Satara+Parisar,+Chhatrapati+Sambhajinagar,+Maharashtra+431010"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="map-button"
+  >
+    📍 Open Location in Google Maps
+  </a>
+</div>
+
               </div>
               <p className="map-address">
                 Chhatrapati Sambhajinagar, Maharashtra
@@ -197,6 +198,15 @@ const Contact = () => {
       </div>
     </section>
   );
+  <a
+  href="https://www.google.com/maps/dir/?api=1&destination=19.8448928,75.333816"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="directions-btn"
+>
+  Get Directions
+</a>
+
 };
 
 export default Contact;

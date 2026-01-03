@@ -4,9 +4,7 @@ import './Trainers.css';
 
 /**
  * Trainers Section Component
- * Displays gym founders/trainers:
- * - Mrs. Archana Birajdar
- * - Mr. Vilas Birajdar
+ * Displays gym founders/trainers
  */
 const Trainers = () => {
   const trainers = [
@@ -15,14 +13,16 @@ const Trainers = () => {
       role: 'Founder & Wellness Coach',
       specialty: 'Certified Nutrition Coach',
       image: 'https://customer-assets.emergentagent.com/job_elite-gym-2/artifacts/l69db2k6_T1.jpg',
-      description: 'Accomplished district-level athlete with extensive experience running a successful nutrition club. A trusted leader in health and wellness.'
+      description:
+        'Accomplished district-level athlete with extensive experience running a successful nutrition club. A trusted leader in health and wellness.'
     },
     {
       name: 'Mr. Vilas Birajdar',
       role: 'Founder & Wellness Coach',
       specialty: 'Certified Nutrition Coach',
       image: 'https://customer-assets.emergentagent.com/job_elite-gym-2/artifacts/d8ixnhd1_T2.jpg',
-      description: 'District-level athlete with over four years of experience. Brings unparalleled expertise in fitness and nutrition to our community.'
+      description:
+        'District-level athlete with over four years of experience. Brings unparalleled expertise in fitness and nutrition to our community.'
     }
   ];
 
@@ -41,19 +41,26 @@ const Trainers = () => {
         <div className="trainers-grid">
           {trainers.map((trainer, index) => (
             <GlassCard key={index} hover className="trainer-card">
+              
+              {/* SQUARE IMAGE WRAPPER */}
               <div className="trainer-image-container">
-                <img 
-                  src={trainer.image} 
-                  alt={trainer.name} 
-                  className="trainer-image"
-                />
-                <div className="trainer-badge">{trainer.specialty}</div>
+                <div className="trainer-image-inner">
+                  <img
+                    src={trainer.image}
+                    alt={trainer.name}
+                    className="trainer-image"
+                  />
+                  <div className="trainer-badge">{trainer.specialty}</div>
+                </div>
               </div>
+
+              {/* TEXT CONTENT */}
               <div className="trainer-content">
                 <h3 className="trainer-name">{trainer.name}</h3>
                 <p className="trainer-role">{trainer.role}</p>
                 <p className="trainer-description">{trainer.description}</p>
               </div>
+
             </GlassCard>
           ))}
         </div>
@@ -62,8 +69,10 @@ const Trainers = () => {
         <GlassCard className="founder-message-card">
           <h3 className="founder-message-heading">Our Promise to You</h3>
           <p className="founder-message-text">
-            Join the TTZ FITNESS 24 family today and take the first step toward transforming your body and mind. 
-            Let us support you on your fitness journey with personalized care and a vibrant community that encourages growth.
+            Join the TTZ FITNESS 24 family today and take the first step toward
+            transforming your body and mind. Let us support you on your fitness
+            journey with personalized care and a vibrant community that
+            encourages growth.
           </p>
           <p className="founder-message-signature">
             - The TTZ Fitness Team

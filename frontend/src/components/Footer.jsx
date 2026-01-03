@@ -91,9 +91,17 @@ const Footer = () => {
                 </div>
               </li>
               <li className="footer-contact-item">
-                <MapPin size={18} />
-                <span>Chhatrapati Sambhajinagar, Maharashtra</span>
-              </li>
+  <MapPin size={18} />
+  <a
+    href="https://maps.app.goo.gl/DY5aPzJaSD6x7QKH9"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="footer-contact-link"
+  >
+    Chhatrapati Sambhajinagar, Maharashtra
+  </a>
+</li>
+
               <li className="footer-contact-item">
                 <Instagram size={18} />
                 <a 
@@ -112,9 +120,19 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="footer-bottom">
           <div className="footer-divider"></div>
-          <p className="footer-copyright">
-            © 2025 TTZ FITNESS. All rights reserved. Made with <Heart size={16} fill="#d9fb06" color="#d9fb06" /> in Chhatrapati Sambhajinagar
-          </p>
+         <p className="footer-copyright">
+  © 2026 TTZ FITNESS. All rights reserved. Made with{' '}
+  <Heart size={16} fill="#d9fb06" color="#d9fb06" /> by{' '}
+  <a
+    href="https://www.linkedin.com/in/aditya-kittad-bbb9532ba/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="footer-linkedin"
+  >
+    Aditya Kittad
+  </a>
+</p>
+
         </div>
       </div>
     </footer>
