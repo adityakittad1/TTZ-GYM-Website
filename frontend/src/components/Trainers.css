@@ -1,0 +1,174 @@
+/* Trainers Section Styles */
+.trainers-section {
+  background: #1a1c1b;
+  padding: 120px 40px;
+  position: relative;
+}
+
+.trainers-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Trainers Grid */
+.trainers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 32px;
+  margin-bottom: 60px;
+}
+
+.trainer-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Trainer Image Container */
+.trainer-image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.trainer-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trainer-card:hover .trainer-image {
+  transform: scale(1.05);
+}
+
+/* Trainer Badge */
+.trainer-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(217, 251, 6, 0.95);
+  color: #1a1c1b;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 16px rgba(217, 251, 6, 0.3);
+}
+
+/* Trainer Content */
+.trainer-content {
+  padding: 32px;
+}
+
+.trainer-name {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: #d9fb06;
+  margin-bottom: 8px;
+}
+
+.trainer-role {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #dfddd6;
+  margin-bottom: 16px;
+}
+
+.trainer-description {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #888680;
+}
+
+/* Founder Message Card */
+.founder-message-card {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(217, 251, 6, 0.05),
+    rgba(48, 47, 44, 0.4)
+  );
+}
+
+.founder-message-heading {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #d9fb06;
+  margin-bottom: 24px;
+}
+
+.founder-message-text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #dfddd6;
+  margin-bottom: 24px;
+}
+
+.founder-message-signature {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #d9fb06;
+  font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .trainers-section {
+    padding: 80px 20px;
+  }
+
+  .trainers-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .trainer-image-container {
+    height: 320px;
+  }
+
+  .trainer-content {
+    padding: 24px;
+  }
+
+  .trainer-name {
+    font-size: 1.5rem;
+  }
+
+  .trainer-role {
+    font-size: 1rem;
+  }
+
+  .trainer-description {
+    font-size: 0.95rem;
+  }
+
+  .founder-message-card {
+    padding: 36px 24px;
+  }
+
+  .founder-message-heading {
+    font-size: 1.5rem;
+  }
+
+  .founder-message-text {
+    font-size: 1rem;
+  }
+
+  .founder-message-signature {
+    font-size: 1rem;
+  }
+}
