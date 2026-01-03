@@ -1,0 +1,150 @@
+/* Services Section Styles */
+.services-section {
+  background: linear-gradient(180deg, #1a1c1b 0%, #0f0f10 100%);
+  padding: 120px 40px;
+  position: relative;
+}
+
+.services-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.service-card {
+  text-align: center;
+  padding: 40px 28px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(217, 251, 6, 0.15), rgba(217, 251, 6, 0.05));
+  border-radius: 20px;
+  color: #d9fb06;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, rgba(217, 251, 6, 0.25), rgba(217, 251, 6, 0.1));
+  transform: scale(1.1) rotateZ(5deg);
+}
+
+.service-title {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: #dfddd6;
+  margin-bottom: 16px;
+}
+
+.service-description {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #888680;
+}
+
+/* Services CTA */
+.services-cta {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-card {
+  text-align: center;
+  padding: 48px 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(217, 251, 6, 0.08),
+    rgba(48, 47, 44, 0.4)
+  );
+}
+
+.cta-heading {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #d9fb06;
+  margin-bottom: 16px;
+}
+
+.cta-text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #dfddd6;
+  margin-bottom: 32px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .services-section {
+    padding: 80px 20px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .service-card {
+    padding: 32px 20px;
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .service-title {
+    font-size: 1.2rem;
+  }
+
+  .service-description {
+    font-size: 0.95rem;
+  }
+
+  .cta-card {
+    padding: 36px 24px;
+  }
+
+  .cta-heading {
+    font-size: 1.5rem;
+  }
+
+  .cta-text {
+    font-size: 1rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-buttons .btn-primary,
+  .cta-buttons .btn-secondary {
+    width: 100%;
+  }
+}
