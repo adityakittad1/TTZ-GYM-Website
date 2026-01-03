@@ -56,7 +56,7 @@ const Header = () => {
         </nav>
 
         {/* Call to Action Button */}
-        <a href="tel:9028468563" className="btn-primary header-cta">
+        <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary header-cta">
           Join Now
         </a>
 
