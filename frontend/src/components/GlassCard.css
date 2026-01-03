@@ -1,0 +1,27 @@
+/* Apple-Style Glassmorphism Card */
+.glass-card {
+  background: rgba(48, 47, 44, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover effect for interactive cards */
+.glass-card-hover:hover {
+  background: rgba(48, 47, 44, 0.6);
+  border: 1px solid rgba(217, 251, 6, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .glass-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
