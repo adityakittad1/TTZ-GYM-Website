@@ -84,7 +84,7 @@ const Membership = () => {
                 </div>
               </div>
 
-              <a href="tel:9028468563" className="btn-primary plan-btn">
+              <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary plan-btn">
                 Book Now
               </a>
             </GlassCard>
