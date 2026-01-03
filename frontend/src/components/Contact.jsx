@@ -23,10 +23,8 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Create WhatsApp message with form data
-    const message = `Hi! I'm ${formData.name}. Phone: ${formData.phone}. Email: ${formData.email}. Message: ${formData.message}`;
-    const whatsappUrl = `https://wa.me/919028468563?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    // Redirect to WhatsApp link
+    window.open('https://wa.link/z36oiv', '_blank');
   };
 
   const handleChange = (e) => {
