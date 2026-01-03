@@ -1,0 +1,180 @@
+/* About Section Styles */
+.about-section {
+  background: #1a1c1b;
+  padding: 120px 40px;
+  position: relative;
+}
+
+.about-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  color: #d9fb06;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+.section-subtitle {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: #888680;
+  letter-spacing: 0.5px;
+}
+
+/* Main About Card */
+.about-main-card {
+  margin-bottom: 60px;
+}
+
+.about-heading {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #d9fb06;
+  margin-bottom: 24px;
+}
+
+.about-text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #dfddd6;
+  margin-bottom: 20px;
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 40px 28px;
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(217, 251, 6, 0.1);
+  border-radius: 50%;
+  color: #d9fb06;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  background: rgba(217, 251, 6, 0.2);
+  transform: scale(1.1);
+}
+
+.feature-title {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #dfddd6;
+  margin-bottom: 12px;
+}
+
+.feature-description {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #888680;
+}
+
+/* Mission Card */
+.mission-card {
+  background: linear-gradient(
+    135deg,
+    rgba(217, 251, 6, 0.05),
+    rgba(48, 47, 44, 0.4)
+  );
+}
+
+.mission-heading {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: #d9fb06;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.mission-text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #dfddd6;
+  text-align: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .about-section {
+    padding: 80px 20px;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .about-heading {
+    font-size: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 32px 20px;
+  }
+
+  .mission-heading {
+    font-size: 1.5rem;
+  }
+
+  .mission-text {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,245 @@
+/* Hero Section Styles */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 120px 40px 80px;
+}
+
+/* Background Image */
+.hero-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.hero-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0%;
+}
+
+/* Dark Overlay for Text Readability */
+.hero-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(26, 28, 27, 0.7));
+}
+
+/* Hero Content */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Glass Card Effect */
+.hero-glass-card {
+  background: rgba(48, 47, 44, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 60px 48px;
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* Logo Container */
+.hero-logo-container {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #d9fb06;
+  box-shadow: 0 8px 24px rgba(217, 251, 6, 0.3);
+}
+
+/* Main Title */
+.hero-title {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  color: #d9fb06;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+/* Tagline */
+.hero-tagline {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #dfddd6;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+/* Subtitle */
+.hero-subtitle {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #888680;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* CTA Buttons */
+.hero-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  justify-content: center;
+}
+
+/* Contact Numbers */
+.hero-contact-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.contact-number {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #d9fb06;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-number:hover {
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.contact-divider {
+  color: #888680;
+  font-size: 1.2rem;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.scroll-arrow {
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(217, 251, 6, 0.6);
+  border-radius: 20px;
+  position: relative;
+  animation: scroll-bounce 2s infinite;
+}
+
+.scroll-arrow::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #d9fb06;
+  border-radius: 50%;
+  animation: scroll-dot 2s infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scroll-dot {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 20px);
+    opacity: 0;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .hero-section {
+    padding: 100px 20px 60px;
+  }
+
+  .hero-glass-card {
+    padding: 40px 24px;
+    border-radius: 24px;
+  }
+
+  .hero-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .hero-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .contact-number {
+    font-size: 1rem;
+  }
+}
