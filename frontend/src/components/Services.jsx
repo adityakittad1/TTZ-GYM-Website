@@ -95,8 +95,8 @@ const Services = () => {
               We have the perfect plan for you! Contact us today to learn more about our programs.
             </p>
             <div className="cta-buttons">
-              <a href="tel:9028468563" className="btn-primary">
-                Call Now
+              <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary">
+                Book Now
               </a>
               <a href="https://wa.me/919028468563" target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 WhatsApp Us
