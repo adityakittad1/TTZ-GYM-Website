@@ -86,7 +86,7 @@ const Testimonials = () => {
         {/* CTA */}
         <div className="testimonials-cta">
           <p className="cta-text">Ready to write your own success story?</p>
-          <a href="tel:9028468563" className="btn-primary">
+          <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary">
             Join TTZ Fitness Today
           </a>
         </div>
