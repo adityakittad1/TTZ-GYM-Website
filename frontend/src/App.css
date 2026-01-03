@@ -1,34 +1,140 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/**
+ * Global App Styles
+ * TTZ FITNESS Website - Apple Glassmorphism Design
+ * Based on Pixel Pushers/Neon Tech Design System
+ */
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* App Container */
+.App {
+  min-height: 100vh;
+  background: #1a1c1b;
+  overflow-x: hidden;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Main Content */
+main {
+  position: relative;
+  z-index: 1;
 }
 
-.App-link {
-    color: #61dafb;
+/* Primary Button Styles (Global) */
+.btn-primary {
+  background: #d9fb06;
+  color: #1a1c1b;
+  border: none;
+  border-radius: 10rem;
+  padding: 14px 32px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(217, 251, 6, 0.3);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(217, 251, 6, 0.5);
+  background: #fff;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Button Styles (Global) */
+.btn-secondary {
+  background: transparent;
+  color: #d9fb06;
+  border: 2px solid #d9fb06;
+  border-radius: 10rem;
+  padding: 12px 32px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+  background: #d9fb06;
+  color: #1a1c1b;
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(217, 251, 6, 0.3);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Selection Styling */
+::selection {
+  background: rgba(217, 251, 6, 0.3);
+  color: #fff;
+}
+
+::-moz-selection {
+  background: rgba(217, 251, 6, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #302f2c;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d9fb06;
+}
+
+/* Mobile Responsive Utilities */
+@media (max-width: 767px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.95rem;
+    padding: 12px 24px;
+  }
 }
