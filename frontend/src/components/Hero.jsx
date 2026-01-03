@@ -51,9 +51,9 @@ const Hero = () => {
 
           {/* Call to Action Buttons */}
           <div className="hero-cta-buttons">
-            <a href="tel:9028468563" className="btn-primary hero-btn">
+            <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary hero-btn">
               <Phone size={20} />
-              Call Now
+              Join Now
             </a>
             <a 
               href="https://wa.me/919028468563" 
