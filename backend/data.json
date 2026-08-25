@@ -1,0 +1,11 @@
+{
+  "status_checks": [],
+  "hero_images": [],
+  "settings": {
+    "hero_slideshow": {
+      "slideDuration": 3,
+      "transitionDuration": 1000,
+      "autoplay": true
+    }
+  }
+}

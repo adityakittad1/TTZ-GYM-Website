@@ -2,12 +2,13 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, UploadFile, File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import uuid
 import io
 import base64
+import json
+import asyncio
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
@@ -15,14 +16,24 @@ from datetime import datetime, timezone, timedelta
 import jwt
 from passlib.context import CryptContext
 
-
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# ── MongoDB ──────────────────────────────────────────────
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# ── Local JSON DB ──────────────────────────────────────────────
+DB_FILE = ROOT_DIR / 'data.json'
+
+def load_db():
+    if not DB_FILE.exists():
+        return {'status_checks': [], 'hero_images': [], 'settings': {}}
+    try:
+        with open(DB_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {'status_checks': [], 'hero_images': [], 'settings': {}}
+
+def save_db(data):
+    with open(DB_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
 
 # ── Auth config ──────────────────────────────────────────
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'ttz_fitness_secret_change_me_in_prod')
@@ -109,18 +120,20 @@ async def root():
 
 @api_router.post('/status', response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
+    db_data = load_db()
+    status_obj = StatusCheck(client_name=input.client_name)
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    _ = await db.status_checks.insert_one(doc)
+    db_data.setdefault('status_checks', []).append(doc)
+    save_db(db_data)
     return status_obj
 
 @api_router.get('/status', response_model=List[StatusCheck])
 async def get_status_checks():
-    status_checks = await db.status_checks.find({}, {'_id': 0}).to_list(1000)
+    db_data = load_db()
+    status_checks = db_data.get('status_checks', [])
     for check in status_checks:
-        if isinstance(check['timestamp'], str):
+        if isinstance(check.get('timestamp'), str):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     return status_checks
 
@@ -158,12 +171,15 @@ async def admin_login(form_data: OAuth2PasswordRequestForm = Depends()):
 @api_router.get('/hero-images', response_model=List[HeroImage])
 async def get_hero_images():
     """Public endpoint — returns hero images in sort order."""
-    docs = await db.hero_images.find({}, {'_id': 0}).sort('sort_order', 1).to_list(100)
+    db_data = load_db()
+    docs = db_data.get('hero_images', [])
+    docs.sort(key=lambda x: x.get('sort_order', 0))
     result = []
     for doc in docs:
-        if isinstance(doc.get('created_at'), str):
-            doc['created_at'] = datetime.fromisoformat(doc['created_at'])
-        result.append(HeroImage(**doc))
+        d = dict(doc)
+        if isinstance(d.get('created_at'), str):
+            d['created_at'] = datetime.fromisoformat(d['created_at'])
+        result.append(HeroImage(**d))
     return result
 
 @api_router.post('/hero-images', response_model=HeroImage)
@@ -171,7 +187,7 @@ async def upload_hero_image(
     file: UploadFile = File(...),
     _admin: str = Depends(get_current_admin)
 ):
-    """Upload a new hero image — stores as base64 data URL in MongoDB."""
+    """Upload a new hero image — stores as base64 data URL."""
     if file.content_type not in ('image/jpeg', 'image/png', 'image/webp'):
         raise HTTPException(status_code=400, detail='Invalid image type. Use JPEG, PNG, or WebP.')
     
@@ -182,8 +198,9 @@ async def upload_hero_image(
     b64 = base64.b64encode(content).decode('utf-8')
     data_url = f'data:{file.content_type};base64,{b64}'
     
-    # Determine next sort order
-    count = await db.hero_images.count_documents({})
+    db_data = load_db()
+    hero_images = db_data.setdefault('hero_images', [])
+    count = len(hero_images)
     
     image_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc)
@@ -194,7 +211,8 @@ async def upload_hero_image(
         'sort_order': count,
         'created_at': now.isoformat(),
     }
-    await db.hero_images.insert_one(doc)
+    hero_images.append(doc)
+    save_db(db_data)
     
     return HeroImage(
         id=image_id,
@@ -210,9 +228,15 @@ async def delete_hero_image(
     _admin: str = Depends(get_current_admin)
 ):
     """Delete a hero image by ID."""
-    result = await db.hero_images.delete_one({'id': image_id})
-    if result.deleted_count == 0:
+    db_data = load_db()
+    hero_images = db_data.get('hero_images', [])
+    new_images = [img for img in hero_images if img.get('id') != image_id]
+    
+    if len(new_images) == len(hero_images):
         raise HTTPException(status_code=404, detail='Image not found')
+        
+    db_data['hero_images'] = new_images
+    save_db(db_data)
     return {'message': 'Deleted'}
 
 @api_router.put('/hero-images/reorder')
@@ -221,8 +245,17 @@ async def reorder_hero_images(
     _admin: str = Depends(get_current_admin)
 ):
     """Update sort order for all images."""
+    db_data = load_db()
+    hero_images = db_data.get('hero_images', [])
+    
+    # Create a quick lookup map
+    id_to_img = {img['id']: img for img in hero_images}
+    
     for i, image_id in enumerate(body.order):
-        await db.hero_images.update_one({'id': image_id}, {'$set': {'sort_order': i}})
+        if image_id in id_to_img:
+            id_to_img[image_id]['sort_order'] = i
+            
+    save_db(db_data)
     return {'message': 'Reordered'}
 
 
@@ -233,7 +266,8 @@ async def reorder_hero_images(
 @api_router.get('/settings/hero', response_model=HeroSettings)
 async def get_hero_settings():
     """Get hero slideshow settings."""
-    doc = await db.settings.find_one({'_id': 'hero_slideshow'})
+    db_data = load_db()
+    doc = db_data.get('settings', {}).get('hero_slideshow')
     if not doc:
         return HeroSettings()
     return HeroSettings(**doc)
@@ -244,11 +278,11 @@ async def update_hero_settings(
     _admin: str = Depends(get_current_admin)
 ):
     """Update hero slideshow settings."""
-    await db.settings.update_one(
-        {'_id': 'hero_slideshow'},
-        {'$set': settings.model_dump()},
-        upsert=True
-    )
+    db_data = load_db()
+    if 'settings' not in db_data:
+        db_data['settings'] = {}
+    db_data['settings']['hero_slideshow'] = settings.model_dump()
+    save_db(db_data)
     return settings
 
 
@@ -271,7 +305,3 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-@app.on_event('shutdown')
-async def shutdown_db_client():
-    client.close()

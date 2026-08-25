@@ -12,7 +12,7 @@ import './Hero.css';
  * - WhatsApp CTA + phone links preserved exactly
  */
 
-const HERO_IMAGES = [
+const DEFAULT_HERO_IMAGES = [
   '/images/gym2.png',
   '/images/gym1.png',
   '/images/gym3.png',
@@ -23,8 +23,10 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://${window.locati
 
 const Hero = () => {
   const [slideDuration, setSlideDuration] = useState(8000);
+  const [heroImages, setHeroImages] = useState(DEFAULT_HERO_IMAGES);
 
   useEffect(() => {
+    // Fetch settings
     axios.get(`${BACKEND_URL}/api/settings/hero`)
       .then((res) => {
         if (res.data && res.data.slideDuration) {
@@ -35,9 +37,20 @@ const Hero = () => {
       .catch((err) => {
         console.error('Failed to fetch hero settings:', err);
       });
+
+    // Fetch images
+    axios.get(`${BACKEND_URL}/api/hero-images`)
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          setHeroImages(res.data.map(img => img.url));
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch hero images:', err);
+      });
   }, []);
 
-  const { currentIndex, isTransitioning, goTo, pause, resume } = useSlideshow(HERO_IMAGES, slideDuration);
+  const { currentIndex, isTransitioning, goTo, pause, resume } = useSlideshow(heroImages, slideDuration);
 
   const scrollDown = () => {
     const about = document.getElementById('about');
@@ -53,7 +66,7 @@ const Hero = () => {
     >
       {/* ── Background Slideshow ── */}
       <div className="hero__slideshow" aria-hidden="true">
-        {HERO_IMAGES.map((src, i) => (
+        {heroImages.map((src, i) => (
           <div
             key={src}
             className={`hero__slide ${i === currentIndex ? 'hero__slide--active' : ''} ${
@@ -114,19 +127,19 @@ const Hero = () => {
       </div>
 
       {/* ── Slide counter ── */}
-      <div className="hero__counter" aria-live="polite" aria-label={`Slide ${currentIndex + 1} of ${HERO_IMAGES.length}`}>
+      <div className="hero__counter" aria-live="polite" aria-label={`Slide ${currentIndex + 1} of ${heroImages.length}`}>
         <span className="hero__counter-current">
           {String(currentIndex + 1).padStart(2, '0')}
         </span>
         <span className="hero__counter-sep" aria-hidden="true">/</span>
         <span className="hero__counter-total">
-          {String(HERO_IMAGES.length).padStart(2, '0')}
+          {String(heroImages.length).padStart(2, '0')}
         </span>
       </div>
 
       {/* ── Slideshow Dots ── */}
       <div className="hero__dots" aria-label="Slideshow navigation">
-        {HERO_IMAGES.map((_, i) => (
+        {heroImages.map((_, i) => (
           <button
             key={i}
             className={`hero__dot ${i === currentIndex ? 'hero__dot--active' : ''}`}
