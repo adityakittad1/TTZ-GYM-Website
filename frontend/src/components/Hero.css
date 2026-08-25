@@ -1,245 +1,296 @@
-/* Hero Section Styles */
-.hero-section {
-  min-height: 100vh;
+/* ============================================================
+   TTZ HERO — Full-viewport crossfade slideshow
+   Header clearance uses CSS custom properties defined in
+   index.css so the hero always accounts for the correct
+   header height at every breakpoint.
+   ============================================================ */
+
+/* ── Section container ── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  min-height: 580px;
+  max-height: 1000px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
   overflow: hidden;
-  padding: 120px 40px 80px;
+
+  /*
+   * Push the visual center of flex content below the header.
+   * The background slideshow (position: absolute; inset: 0) still
+   * covers the full viewport including behind the header — only the
+   * text/CTA content is offset downward so it clears the nav.
+   */
+  padding-top: var(--header-total-h);
 }
 
-/* Background Image */
-.hero-background {
+/* ── Slideshow container ── */
+.hero__slideshow {
   position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+  will-change: opacity;
+}
+
+.hero__slide--active {
+  opacity: 1;
+}
+
+.hero__slide--transitioning {
+  opacity: 0;
+}
+
+.hero__slide-img {
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-}
-
-.hero-image {
   object-fit: cover;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0%;
+  object-position: center;
+  animation: heroKenBurns 14s ease-in-out infinite alternate;
 }
 
-/* Dark Overlay for Text Readability */
-.hero-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(26, 28, 27, 0.7));
+@keyframes heroKenBurns {
+  from { transform: scale(1.04) translate(0, 0); }
+  to   { transform: scale(1.00) translate(-0.5%, -0.5%); }
 }
 
-/* Hero Content */
-.hero-content {
-  position: relative;
+/* Multi-layer overlays */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.80) 0%,
+    rgba(0, 0, 0, 0.48) 50%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   z-index: 1;
-  max-width: 800px;
-  width: 100%;
 }
 
-/* Glass Card Effect */
-.hero-glass-card {
-  background: rgba(48, 47, 44, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 60px 48px;
-  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
-  text-align: center;
-}
-
-/* Logo Container */
-.hero-logo-container {
-  margin-bottom: 32px;
-  display: flex;
-  justify-content: center;
-}
-
-.hero-logo {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #d9fb06;
-  box-shadow: 0 8px 24px rgba(217, 251, 6, 0.3);
-}
-
-/* Main Title */
-.hero-title {
-  font-family: 'Inter', Arial, sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.1;
-  color: #d9fb06;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-}
-
-/* Tagline */
-.hero-tagline {
-  font-family: 'Inter', Arial, sans-serif;
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: #dfddd6;
-  margin-bottom: 12px;
-  letter-spacing: 2px;
-}
-
-/* Subtitle */
-.hero-subtitle {
-  font-family: 'Inter', Arial, sans-serif;
-  font-weight: 500;
-  font-size: 1.1rem;
-  color: #888680;
-  margin-bottom: 40px;
-  line-height: 1.6;
-}
-
-/* CTA Buttons */
-.hero-cta-buttons {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-
-.hero-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 180px;
-  justify-content: center;
-}
-
-/* Contact Numbers */
-.hero-contact-numbers {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.contact-number {
-  font-family: 'Inter', Arial, sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #d9fb06;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.contact-number:hover {
-  color: #fff;
-  transform: scale(1.05);
-}
-
-.contact-divider {
-  color: #888680;
-  font-size: 1.2rem;
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
+.hero__overlay-bottom {
   position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.95), transparent);
   z-index: 2;
 }
 
-.scroll-arrow {
-  width: 30px;
-  height: 50px;
-  border: 2px solid rgba(217, 251, 6, 0.6);
-  border-radius: 20px;
+/* ── Content block (centered in visible area below header) ── */
+.hero__content {
   position: relative;
-  animation: scroll-bounce 2s infinite;
+  z-index: 10;
+  text-align: center;
+  padding: 0 var(--space-xl);
+  max-width: 960px;
+  width: 100%;
+  animation: heroFadeIn 1.2s var(--ease-luxury) 0.2s both;
 }
 
-.scroll-arrow::before {
-  content: '';
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main title */
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 11rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  text-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
+}
+
+.hero__title-accent {
+  color: var(--gold);
+}
+
+/* Tagline */
+.hero__tagline {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.50);
+  margin-bottom: var(--space-xl);
+}
+
+/* CTA buttons */
+.hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.hero__btn-primary {
+  font-size: 0.875rem;
+  padding: 16px 40px;
+}
+
+.hero__btn-secondary {
+  font-size: 0.875rem;
+  padding: 15px 36px;
+}
+
+/* ── Slide counter (bottom-right) ── */
+.hero__counter {
   position: absolute;
-  top: 10px;
+  bottom: 90px;
+  right: var(--space-xl);
+  z-index: 10;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  user-select: none;
+}
+
+.hero__counter-current {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.hero__counter-sep {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 300;
+}
+
+.hero__counter-total {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Slideshow dots (bottom-center) ── */
+.hero__dots {
+  position: absolute;
+  bottom: 90px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero__dot {
   width: 6px;
   height: 6px;
-  background: #d9fb06;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background var(--duration-mid) var(--ease-luxury),
+    width     var(--duration-mid) var(--ease-luxury);
+}
+
+.hero__dot--active {
+  width: 28px;
+  background: var(--gold);
+}
+
+/* ── Scroll indicator ── */
+.hero__scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 50%;
-  animation: scroll-dot 2s infinite;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  animation: heroScrollBounce 2.8s ease-in-out infinite;
+  transition:
+    border-color var(--duration-fast) var(--ease-snap),
+    color        var(--duration-fast) var(--ease-snap);
 }
 
-@keyframes scroll-bounce {
-  0%, 100% {
-    opacity: 0.6;
+.hero__scroll-indicator:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+@keyframes heroScrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* On mobile, --header-total-h drops to 64px (utility bar hidden)
+   We reset this via the CSS variable declared in index.css media query */
+@media (max-width: 900px) {
+  .hero {
+    /* Override to mobile header height (utility bar is gone) */
+    padding-top: 64px;
   }
-  50% {
-    opacity: 1;
+
+  .hero__content {
+    padding: 0 var(--space-md);
+  }
+
+  .hero__counter {
+    right: var(--space-md);
+    bottom: 96px;
   }
 }
 
-@keyframes scroll-dot {
-  0% {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, 20px);
-    opacity: 0;
-  }
-}
-
-/* Mobile Responsive */
-@media (max-width: 767px) {
-  .hero-section {
-    padding: 100px 20px 60px;
-  }
-
-  .hero-glass-card {
-    padding: 40px 24px;
-    border-radius: 24px;
-  }
-
-  .hero-logo {
-    width: 80px;
-    height: 80px;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-tagline {
-    font-size: 1rem;
-  }
-
-  .hero-subtitle {
-    font-size: 0.95rem;
-  }
-
-  .hero-cta-buttons {
+@media (max-width: 768px) {
+  .hero__actions {
     flex-direction: column;
-    width: 100%;
+    gap: var(--space-sm);
+    align-items: center;
   }
 
-  .hero-btn {
+  .hero__btn-primary,
+  .hero__btn-secondary {
     width: 100%;
-    min-width: auto;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: clamp(3.5rem, 16vw, 5rem);
   }
 
-  .contact-number {
-    font-size: 1rem;
+  .hero__counter {
+    display: none; /* too crowded on very small screens */
   }
 }

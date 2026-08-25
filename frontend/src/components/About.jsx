@@ -1,95 +1,130 @@
 import React from 'react';
-import GlassCard from './GlassCard';
-import { Target, Heart, TrendingUp, Users } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 import './About.css';
 
 /**
- * About Section Component
- * Features:
- * - Gym story and mission
- * - Why choose TTZ Fitness
- * - Key differentiators
- * - Founder information
+ * About — Editorial split layout.
+ * Left: full-bleed gym photo (gym1.png).
+ * Right: editorial text with numbered list instead of icon cards.
+ * Mission quote in Cormorant Garamond serif.
+ * All original content preserved.
  */
+const PILLARS = [
+  {
+    num: '01',
+    heading: 'Personalised Programs',
+    body: 'Training and nutrition plans built around your specific goals, not generic templates.',
+  },
+  {
+    num: '02',
+    heading: 'Expert Coaching',
+    body: 'Certified coaches and district-level athletes who understand what results actually look like.',
+  },
+  {
+    num: '03',
+    heading: 'Proven Track Record',
+    body: 'Four years of consistent member transformations — our results speak louder than claims.',
+  },
+  {
+    num: '04',
+    heading: 'Real Community',
+    body: 'A motivated, supportive environment where everyone is committed to growth.',
+  },
+];
+
 const About = () => {
+  const ref = useScrollReveal();
+
   return (
-    <section id="about" className="about-section">
-      <div className="about-container">
-        {/* Section Header */}
-        <div className="section-header">
-          <h2 className="section-title">About Us</h2>
-          <p className="section-subtitle">
-            Transforming Lives Since 2020
-          </p>
+    <section id="about" className="about" ref={ref}>
+      {/* ── Split layout ── */}
+      <div className="about__split">
+
+        {/* Left — Full-bleed photograph */}
+        <div className="about__photo-col reveal-left">
+          <div className="about__photo-wrap">
+            <img
+              src="/images/gym1.png"
+              alt="TTZ Fitness training floor"
+              className="about__photo"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="about__photo-badge">
+              <span className="about__photo-badge-year">2020</span>
+              <span className="about__photo-badge-label">Est.</span>
+            </div>
+          </div>
         </div>
 
-        {/* Main About Content */}
-        <GlassCard className="about-main-card">
-          <h3 className="about-heading">Welcome to TTZ FITNESS 24</h3>
-          <p className="about-text">
-            Chhatrapati Sambhajinagar's premier fitness destination since 2020. At TTZ FITNESS 24, 
-            we are committed to helping you achieve total wellness by combining expert fitness coaching 
-            and nutrition guidance.
+        {/* Right — Editorial text */}
+        <div className="about__text-col reveal-right">
+          <span className="section-eyebrow">Our Story</span>
+
+          <h2 className="about__title">
+            Chhatrapati Sambhajinagar's<br />
+            <span className="about__title-accent">Premier Fitness Destination.</span>
+          </h2>
+
+          <p className="about__intro">
+            At TTZ FITNESS 24, we combine expert coaching, certified nutrition guidance,
+            and state-of-the-art facilities to help every member reach their true potential.
+            Built in 2020. Refined every year since.
           </p>
-          <p className="about-text">
-            Led by our certified nutrition coaches and accomplished district-level athletes, 
-            we design customized programs that align with your individual fitness goals with 
-            state-of-the-art equipment and a wide variety of fitness classes for every level.
-          </p>
-        </GlassCard>
 
-        {/* Why Choose Us - Feature Cards */}
-        <div className="features-grid">
-          <GlassCard hover className="feature-card">
-            <div className="feature-icon">
-              <Target size={32} />
+          {/* Stats inline */}
+          <div className="about__stats">
+            <div className="about__stat">
+              <span className="about__stat-value">4+</span>
+              <span className="about__stat-label">Years</span>
             </div>
-            <h4 className="feature-title">Personalized Plans</h4>
-            <p className="feature-description">
-              Customized fitness and nutrition programs tailored to your unique goals and lifestyle
-            </p>
-          </GlassCard>
+            <div className="about__stat-divider" />
+            <div className="about__stat">
+              <span className="about__stat-value">500+</span>
+              <span className="about__stat-label">Members</span>
+            </div>
+            <div className="about__stat-divider" />
+            <div className="about__stat">
+              <span className="about__stat-value">10+</span>
+              <span className="about__stat-label">Programs</span>
+            </div>
+          </div>
 
-          <GlassCard hover className="feature-card">
-            <div className="feature-icon">
-              <Heart size={32} />
-            </div>
-            <h4 className="feature-title">Expert Guidance</h4>
-            <p className="feature-description">
-              Certified nutrition coaches and experienced trainers committed to your success
-            </p>
-          </GlassCard>
+          {/* Numbered pillars */}
+          <div className="about__pillars">
+            {PILLARS.map((p, i) => (
+              <div
+                key={p.num}
+                className="about__pillar reveal"
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <span className="about__pillar-num">{p.num}</span>
+                <div>
+                  <h3 className="about__pillar-heading">{p.heading}</h3>
+                  <p className="about__pillar-body">{p.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-          <GlassCard hover className="feature-card">
-            <div className="feature-icon">
-              <TrendingUp size={32} />
-            </div>
-            <h4 className="feature-title">Proven Results</h4>
-            <p className="feature-description">
-              Over 4 years of transforming lives with measurable fitness achievements
-            </p>
-          </GlassCard>
-
-          <GlassCard hover className="feature-card">
-            <div className="feature-icon">
-              <Users size={32} />
-            </div>
-            <h4 className="feature-title">Community Support</h4>
-            <p className="feature-description">
-              Join a vibrant community that motivates and encourages your growth
-            </p>
-          </GlassCard>
+          <a
+            href="https://wa.link/z36oiv"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about__cta"
+          >
+            Start Your Journey
+          </a>
         </div>
+      </div>
 
-        {/* Mission Statement */}
-        <GlassCard className="mission-card">
-          <h3 className="mission-heading">Our Mission</h3>
-          <p className="mission-text">
-            To transform your body and mind through a comprehensive approach to health and wellness. 
-            Our state-of-the-art facilities and diverse range of classes cater to all fitness levels, 
-            ensuring everyone can find their path to a healthier lifestyle.
-          </p>
-        </GlassCard>
+      {/* ── Mission quote ── */}
+      <div className="about__mission reveal">
+        <blockquote className="about__mission-quote">
+          "To transform your body and mind through a comprehensive approach to health
+          and wellness — where everyone finds their path to a stronger, healthier life."
+        </blockquote>
+        <cite className="about__mission-cite">— The TTZ Fitness Team</cite>
       </div>
     </section>
   );

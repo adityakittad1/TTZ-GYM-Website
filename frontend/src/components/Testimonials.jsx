@@ -1,95 +1,128 @@
 import React from 'react';
-import GlassCard from './GlassCard';
 import { Star } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 import './Testimonials.css';
 
 /**
- * Testimonials Section Component
- * Displays member reviews and transformations
- * 
- * NOTE: Replace these with real testimonials from your members
+ * Testimonials — Pull-quote first, then 2-col grid.
+ * All 6 original testimonials preserved exactly.
  */
+const TESTIMONIALS = [
+  {
+    name: 'Rajesh Patil',
+    text: 'TTZ Fitness has completely transformed my life! The trainers are knowledgeable and supportive. Lost 15kg in 6 months!',
+    result: 'Fat Loss: 15 kg',
+    rating: 5,
+  },
+  {
+    name: 'Priya Sharma',
+    text: 'Best gym in Chhatrapati Sambhajinagar! The nutrition guidance from Mrs. Birajdar has been invaluable. Highly recommend!',
+    result: 'Fitness Journey: 8 months',
+    rating: 5,
+  },
+  {
+    name: 'Amit Deshmukh',
+    text: 'Amazing trainers and great atmosphere! The personal training sessions helped me achieve my muscle gain goals faster than expected.',
+    result: 'Muscle Gain: 8 kg',
+    rating: 5,
+  },
+  {
+    name: 'Sneha Kulkarni',
+    text: "Love the variety of classes! From Zumba to Yoga, there's something for everyone. The community here is so motivating!",
+    result: 'Overall Fitness',
+    rating: 5,
+  },
+  {
+    name: 'Vikram Jadhav',
+    text: "The personalised nutrition plans made all the difference. Mr. Birajdar's expertise helped me reach my fitness goals efficiently.",
+    result: 'Body Transformation',
+    rating: 5,
+  },
+  {
+    name: 'Anita Rathod',
+    text: 'Clean facility, modern equipment, and professional trainers. TTZ Fitness is worth every rupee. My health has improved significantly!',
+    result: 'Health Improvement',
+    rating: 5,
+  },
+];
+
+const Stars = ({ n }) => (
+  <div className="testimonials__stars" aria-label={`${n} out of 5 stars`}>
+    {[...Array(n)].map((_, i) => (
+      <Star key={i} size={13} fill="#C9A84C" color="#C9A84C" />
+    ))}
+  </div>
+);
+
 const Testimonials = () => {
-  const testimonials = [
-    {
-      name: 'Rajesh Patil',
-      rating: 5,
-      text: 'TTZ Fitness has completely transformed my life! The trainers are knowledgeable and supportive. Lost 15kg in 6 months!',
-      transformation: 'Fat Loss: 15kg'
-    },
-    {
-      name: 'Priya Sharma',
-      rating: 5,
-      text: 'Best gym in Chhatrapati Sambhajinagar! The nutrition guidance from Mrs. Birajdar has been invaluable. Highly recommend!',
-      transformation: 'Fitness Journey: 8 months'
-    },
-    {
-      name: 'Amit Deshmukh',
-      rating: 5,
-      text: 'Amazing trainers and great atmosphere! The personal training sessions helped me achieve my muscle gain goals faster than expected.',
-      transformation: 'Muscle Gain: 8kg'
-    },
-    {
-      name: 'Sneha Kulkarni',
-      rating: 5,
-      text: 'Love the variety of classes! From Zumba to Yoga, there\'s something for everyone. The community here is so motivating!',
-      transformation: 'Overall Fitness'
-    },
-    {
-      name: 'Vikram Jadhav',
-      rating: 5,
-      text: 'The personalized nutrition plans made all the difference. Mr. Birajdar\'s expertise helped me reach my fitness goals efficiently.',
-      transformation: 'Body Transformation'
-    },
-    {
-      name: 'Anita Rathod',
-      rating: 5,
-      text: 'Clean facility, modern equipment, and professional trainers. TTZ Fitness is worth every rupee. My health has improved significantly!',
-      transformation: 'Health Improvement'
-    }
-  ];
+  const ref = useScrollReveal();
+  const [featured, ...rest] = TESTIMONIALS;
 
   return (
-    <section id="testimonials" className="testimonials-section">
-      <div className="testimonials-container">
-        {/* Section Header */}
-        <div className="section-header">
-          <h2 className="section-title">Success Stories</h2>
-          <p className="section-subtitle">
-            Real Transformations From Our Members
-          </p>
+    <section id="testimonials" className="testimonials" ref={ref}>
+      <div className="section-container">
+
+        {/* Header */}
+        <div className="testimonials__header reveal">
+          <span className="section-eyebrow">Real Results</span>
+          <h2 className="testimonials__title">Success Stories</h2>
+          <div className="testimonials__rating-strip">
+            <Stars n={5} />
+            <span className="testimonials__rating-label">
+              Rated 5 stars by our members
+            </span>
+          </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="testimonials-grid">
-          {testimonials.map((testimonial, index) => (
-            <GlassCard key={index} hover className="testimonial-card">
-              {/* Rating Stars */}
-              <div className="testimonial-rating">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={20} fill="#d9fb06" color="#d9fb06" />
-                ))}
-              </div>
+        {/* Featured pull-quote */}
+        <div className="testimonials__featured reveal">
+          <blockquote className="testimonials__pullquote">
+            "{featured.text}"
+          </blockquote>
+          <div className="testimonials__feat-footer">
+            <div className="testimonials__feat-avatar">{featured.name.charAt(0)}</div>
+            <div>
+              <div className="testimonials__feat-name">{featured.name}</div>
+              <div className="testimonials__feat-result">{featured.result}</div>
+            </div>
+          </div>
+        </div>
 
-              {/* Testimonial Text */}
-              <p className="testimonial-text">"{testimonial.text}"</p>
-
-              {/* Member Info */}
-              <div className="testimonial-footer">
-                <div className="testimonial-name">{testimonial.name}</div>
-                <div className="testimonial-transformation">{testimonial.transformation}</div>
+        {/* 2-col grid of remaining testimonials */}
+        <div className="testimonials__grid">
+          {rest.map((t, i) => (
+            <div
+              key={t.name}
+              className="testimonials__card reveal"
+              style={{ transitionDelay: `${(i % 3) * 80}ms` }}
+            >
+              <p className="testimonials__text">"{t.text}"</p>
+              <div className="testimonials__footer">
+                <div className="testimonials__avatar">{t.name.charAt(0)}</div>
+                <div>
+                  <div className="testimonials__name">{t.name}</div>
+                  <div className="testimonials__result">{t.result}</div>
+                </div>
               </div>
-            </GlassCard>
+            </div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="testimonials-cta">
-          <p className="cta-text">Ready to write your own success story?</p>
-          <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary">
+        <div className="testimonials__cta reveal">
+          <p className="testimonials__cta-text">
+            Ready to write your own success story?
+          </p>
+          <a
+            href="https://wa.link/z36oiv"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="testimonials__cta-btn"
+          >
             Join TTZ Fitness Today
           </a>
         </div>
+
       </div>
     </section>
   );

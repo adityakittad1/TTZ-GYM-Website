@@ -1,0 +1,354 @@
+/* ================================================================
+   CONTACT FOOTER — Contact form + Footer merged
+   ================================================================ */
+
+/* ── Upper: contact area ── */
+.cf__contact {
+  background: var(--bg-void);
+  border-top: 1px solid var(--border-subtle);
+  padding: 64px 0;
+}
+
+.cf__contact-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.cf__contact-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  margin: 10px 0 28px;
+  line-height: 1.05;
+}
+
+/* ── Form ── */
+.cf__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cf__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cf__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cf__label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cf__input,
+.cf__textarea {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  padding: 12px 14px;
+  outline: none;
+  transition:
+    border-color var(--duration-fast) var(--ease-snap),
+    box-shadow   var(--duration-fast) var(--ease-snap);
+  -webkit-appearance: none;
+}
+
+.cf__input:focus,
+.cf__textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.10);
+}
+
+.cf__input::placeholder,
+.cf__textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.cf__textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.cf__submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 13px 28px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition:
+    background var(--duration-fast) var(--ease-snap),
+    transform  var(--duration-fast) var(--ease-snap);
+}
+
+.cf__submit:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+/* ── Info column ── */
+.cf__info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 52px; /* align with form (below title) */
+}
+
+.cf__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cf__info-item:first-child {
+  padding-top: 0;
+}
+
+.cf__info-icon {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cf__info-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.cf__info-link {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  line-height: 1.5;
+  transition: color var(--duration-fast) var(--ease-snap);
+}
+
+.cf__info-link:hover {
+  color: var(--gold);
+}
+
+.cf__info-text {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Lower: footer bar ── */
+.cf__footer {
+  background: var(--bg-void);
+  border-top: 1px solid var(--border-subtle);
+  padding: 28px 0;
+}
+
+.cf__footer-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+/* Brand */
+.cf__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cf__brand-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--border-gold);
+}
+
+.cf__brand-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.cf__brand-tag {
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Nav */
+.cf__nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cf__nav-link {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 2px;
+  transition: color var(--duration-fast) var(--ease-snap);
+}
+
+.cf__nav-link:hover {
+  color: var(--gold);
+}
+
+/* Right: socials + copy */
+.cf__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cf__socials {
+  display: flex;
+  gap: 8px;
+}
+
+.cf__social {
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    color        var(--duration-fast) var(--ease-snap),
+    border-color var(--duration-fast) var(--ease-snap);
+}
+
+.cf__social:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.cf__copy {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.cf__credit {
+  color: var(--gold);
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-snap);
+}
+
+.cf__credit:hover {
+  opacity: 0.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .cf__contact-inner {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .cf__contact {
+    padding: 48px 0;
+  }
+
+  .cf__contact-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 var(--space-md);
+  }
+
+  .cf__info-col {
+    padding-top: 0;
+  }
+
+  .cf__footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 0 var(--space-md);
+  }
+
+  .cf__nav {
+    justify-content: flex-start;
+  }
+
+  .cf__right {
+    align-items: flex-start;
+  }
+
+  .cf__copy {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 560px) {
+  .cf__row {
+    grid-template-columns: 1fr;
+  }
+
+  .cf__submit {
+    width: 100%;
+    justify-content: center;
+  }
+}

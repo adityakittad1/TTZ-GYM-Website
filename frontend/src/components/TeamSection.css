@@ -1,0 +1,192 @@
+/* ================================================================
+   TEAM SECTION — WhyTTZ + Trainers merged
+   ================================================================ */
+
+.team-section {
+  background: var(--bg-base);
+  padding: 72px 0;
+}
+
+.team-section__inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ── Left — Why TTZ ── */
+.team-section__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  letter-spacing: 0.04em;
+  line-height: 0.96;
+  color: var(--text-primary);
+  margin: 10px 0 32px;
+}
+
+.team-section__accent {
+  color: var(--gold);
+}
+
+.team-section__reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 36px;
+}
+
+.team-section__reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.team-section__reason:first-child {
+  padding-top: 0;
+}
+
+.team-section__reason-num {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  flex-shrink: 0;
+  opacity: 0.65;
+  padding-top: 1px;
+}
+
+.team-section__reason-heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.team-section__reason-body {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.team-section__cta {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: letter-spacing var(--duration-fast) var(--ease-snap);
+}
+
+.team-section__cta:hover {
+  letter-spacing: 0.2em;
+}
+
+/* ── Right — Trainers ── */
+.team-section__trainers-header {
+  margin-bottom: 20px;
+}
+
+.team-section__trainers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.team-section__trainer {
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.team-section__trainer-img-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.team-section__trainer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.6s var(--ease-luxury);
+}
+
+.team-section__trainer:hover .team-section__trainer-img {
+  transform: scale(1.04);
+}
+
+.team-section__trainer-specialty {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: var(--gold);
+  color: #000;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+}
+
+.team-section__trainer-info {
+  padding: 14px 16px 18px;
+  border-top: 2px solid var(--border-subtle);
+  transition: border-top-color var(--duration-mid) var(--ease-luxury);
+}
+
+.team-section__trainer:hover .team-section__trainer-info {
+  border-top-color: var(--gold);
+}
+
+.team-section__trainer-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+  line-height: 1.1;
+}
+
+.team-section__trainer-role {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .team-section__inner {
+    gap: 56px;
+  }
+}
+
+@media (max-width: 900px) {
+  .team-section {
+    padding: 56px 0;
+  }
+
+  .team-section__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 0 var(--space-md);
+  }
+
+  .team-section__trainer-img-wrap {
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-section__trainers {
+    grid-template-columns: 1fr;
+  }
+}

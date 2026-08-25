@@ -1,0 +1,258 @@
+/* ================================================================
+   CONVERSION — Testimonials + FinalCTA merged
+   ================================================================ */
+
+/* ── Top: testimonials area ── */
+.conv__testimonials {
+  background: var(--bg-surface);
+  padding: 64px 0 56px;
+}
+
+.conv__header {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.conv__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+/* 3-column compact cards */
+.conv__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.conv__card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition:
+    border-color var(--duration-mid) var(--ease-luxury),
+    transform    var(--duration-mid) var(--ease-luxury);
+}
+
+.conv__card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+
+.conv__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.conv__card-text {
+  font-size: 0.845rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.conv__card-footer {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.conv__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.conv__card-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1px;
+}
+
+.conv__card-result {
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Bottom: Cinematic CTA ── */
+.conv__cta-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px var(--space-xl);
+}
+
+.conv__cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.conv__cta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.conv__cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8,8,8,0.6) 0%,
+    rgba(8,8,8,0.82) 100%
+  );
+}
+
+.conv__cta-content {
+  position: relative;
+  z-index: 10;
+  max-width: 700px;
+}
+
+.conv__cta-heading {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.96;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+}
+
+.conv__cta-accent {
+  color: var(--gold);
+}
+
+.conv__cta-sub {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: rgba(245,240,232,0.55);
+  margin-bottom: 36px;
+}
+
+.conv__cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.conv__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--gold);
+  color: #000;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  border-radius: 2px;
+  transition:
+    background var(--duration-fast) var(--ease-snap),
+    transform  var(--duration-fast) var(--ease-snap);
+  box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+}
+
+.conv__btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.conv__btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: rgba(245,240,232,0.7);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 13px 28px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2px;
+  transition:
+    color        var(--duration-fast) var(--ease-snap),
+    border-color var(--duration-fast) var(--ease-snap),
+    transform    var(--duration-fast) var(--ease-snap);
+}
+
+.conv__btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: rgba(255,255,255,0.45);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .conv__testimonials {
+    padding: 48px 0 40px;
+  }
+
+  .conv__cards {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .conv__cta-section {
+    padding: 64px var(--space-md);
+    min-height: 360px;
+  }
+
+  .conv__cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .conv__btn-primary,
+  .conv__btn-ghost {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .conv__header {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

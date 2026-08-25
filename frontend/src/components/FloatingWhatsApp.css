@@ -1,0 +1,106 @@
+/* ================================================================
+   FLOATING WHATSAPP — Premium, unobtrusive
+   ================================================================ */
+
+.floating-wa {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 900;
+
+  /* Delayed entrance */
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  animation: waEntrance 0.5s var(--ease-luxury) 1.5s forwards;
+}
+
+@keyframes waEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.floating-wa__btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow:
+    0 4px 20px rgba(37, 211, 102, 0.35),
+    0 2px 8px rgba(0,0,0,0.3);
+  position: relative;
+  transition:
+    transform   var(--duration-fast) var(--ease-snap),
+    box-shadow  var(--duration-fast) var(--ease-snap);
+
+  /* Subtle breathe animation instead of aggressive pulse */
+  animation: waBreathe 3.5s ease-in-out infinite;
+}
+
+@keyframes waBreathe {
+  0%, 100% { transform: scale(1.00); }
+  50%       { transform: scale(1.04); }
+}
+
+.floating-wa__btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 8px 32px rgba(37, 211, 102, 0.45),
+    0 4px 12px rgba(0,0,0,0.3);
+  animation: none; /* stop breathe on hover so scale doesn't fight */
+}
+
+.floating-wa__btn:focus-visible {
+  outline: 2px solid #25D366;
+  outline-offset: 4px;
+}
+
+/* Tooltip on hover */
+.floating-wa__btn::before {
+  content: 'WhatsApp Us';
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(8,8,8,0.90);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding: 7px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--border-subtle);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-snap);
+}
+
+.floating-wa__btn:hover::before {
+  opacity: 1;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .floating-wa {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .floating-wa__btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Hide tooltip on touch */
+  .floating-wa__btn::before {
+    display: none;
+  }
+}

@@ -1,212 +1,198 @@
 import React, { useState } from 'react';
-import GlassCard from './GlassCard';
-import { MapPin, Phone, Mail, Clock, MessageCircle, Instagram } from 'lucide-react';
+import { MapPin, Phone, MessageCircle, Clock, Instagram } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 import './Contact.css';
 
 /**
- * Contact Section Component
- * Features:
- * - Contact form
- * - Phone numbers with click-to-call
- * - WhatsApp button
- * - Google Maps embedded
- * - Address and timings
- * - Social media link
+ * Contact — Clean form + prominent action links.
+ * All original integrations preserved exactly:
+ * - Form → opens WhatsApp (wa.link/z36oiv)
+ * - Phone: 9028468563, 8668891406
+ * - WhatsApp: wa.me/919028468563
+ * - Google Maps link
+ * - Instagram: ttz_fitness_24
+ * - Timings: 5–10 AM / 5–10 PM
  */
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: ''
-  });
+  const ref = useScrollReveal();
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Redirect to WhatsApp link
     window.open('https://wa.link/z36oiv', '_blank');
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const INFO = [
+    {
+      icon: <Phone size={18} />,
+      title: 'Call Us',
+      content: (
+        <>
+          <a href="tel:9028468563" className="contact__info-link">9028468563</a>
+          <a href="tel:8668891406" className="contact__info-link">8668891406</a>
+        </>
+      ),
+    },
+    {
+      icon: <MessageCircle size={18} />,
+      title: 'WhatsApp',
+      content: (
+        <a href="https://wa.me/919028468563" target="_blank" rel="noopener noreferrer" className="contact__info-link">
+          Chat with us on WhatsApp
+        </a>
+      ),
+    },
+    {
+      icon: <Clock size={18} />,
+      title: 'Timings',
+      content: (
+        <>
+          <span className="contact__info-text">Morning: 5:00 AM – 10:00 AM</span>
+          <span className="contact__info-text">Evening: 5:00 PM – 10:00 PM</span>
+        </>
+      ),
+    },
+    {
+      icon: <Instagram size={18} />,
+      title: 'Instagram',
+      content: (
+        <a href="https://www.instagram.com/ttz_fitness_24/" target="_blank" rel="noopener noreferrer" className="contact__info-link">
+          @ttz_fitness_24
+        </a>
+      ),
+    },
+    {
+      icon: <MapPin size={18} />,
+      title: 'Location',
+      content: (
+        <a
+          href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUyCggAEEUYFhgeGDkyCAgBEAAYFhgeMg0IAhAAGIYDGIAEGIoFMg0IAxAAGIYDGIAEGIoFMgoIBBAAGIAEGKIEMgoIBRAAGIAEGKIEMgcIBhAAGO8FMgoIBxAAGIAEGKIE0gEIMzc4OGowajSoAgCwAgE&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KfUHz6KEmds7MZui6ltRJ_1G&daddr=11,+Gut+No.+142,+Plot+no-+77,+18,+near+Ayyappa+Swami+Temple,+Satara+Parisar,+Chhatrapati+Sambhajinagar,+Maharashtra+431010"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contact__info-link"
+        >
+          Satara Parisar, Chhatrapati Sambhajinagar
+        </a>
+      ),
+    },
+  ];
+
   return (
-    <section id="contact" className="contact-section">
-      <div className="contact-container">
-        {/* Section Header */}
-        <div className="section-header">
-          <h2 className="section-title">Get In Touch</h2>
+    <section id="contact" className="contact" ref={ref}>
+      <div className="section-container">
+
+        {/* Header */}
+        <div className="section-header contact__header reveal">
+          <span className="section-eyebrow">Get In Touch</span>
+          <h2 className="section-title">Start Your Journey</h2>
           <p className="section-subtitle">
-            Start Your Fitness Journey Today
+            Questions? We'd love to hear from you. Send a message and we'll respond via WhatsApp.
           </p>
+          <div className="gold-divider" />
         </div>
 
-        <div className="contact-content">
-          {/* Contact Form */}
-          <GlassCard className="contact-form-card">
-            <h3 className="form-heading">Send Us A Message</h3>
-            <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-group">
-                <label htmlFor="name" className="form-label">Full Name *</label>
+        {/* 2-col layout */}
+        <div className="contact__layout">
+
+          {/* Form */}
+          <div className="contact__form-wrap reveal-left">
+            <h3 className="contact__form-heading">Send Us a Message</h3>
+            <form onSubmit={handleSubmit} className="contact__form" id="contact-form">
+              <div className="contact__field">
+                <label htmlFor="name" className="contact__label">Full Name *</label>
                 <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="form-input"
-                  placeholder="Enter your name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
+                  type="text" id="name" name="name"
+                  className="contact__input" placeholder="Your name"
+                  value={formData.name} onChange={handleChange}
+                  required autoComplete="name"
                 />
               </div>
-
-              <div className="form-group">
-                <label htmlFor="phone" className="form-label">Phone Number *</label>
+              <div className="contact__field">
+                <label htmlFor="phone" className="contact__label">Phone Number *</label>
                 <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  className="form-input"
-                  placeholder="Enter your phone number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
+                  type="tel" id="phone" name="phone"
+                  className="contact__input" placeholder="Your phone number"
+                  value={formData.phone} onChange={handleChange}
+                  required autoComplete="tel"
                 />
               </div>
-
-              <div className="form-group">
-                <label htmlFor="email" className="form-label">Email</label>
+              <div className="contact__field">
+                <label htmlFor="email" className="contact__label">Email (optional)</label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="form-input"
-                  placeholder="Enter your email (optional)"
-                  value={formData.email}
-                  onChange={handleChange}
+                  type="email" id="email" name="email"
+                  className="contact__input" placeholder="your@email.com"
+                  value={formData.email} onChange={handleChange}
+                  autoComplete="email"
                 />
               </div>
-
-              <div className="form-group">
-                <label htmlFor="message" className="form-label">Message</label>
+              <div className="contact__field">
+                <label htmlFor="message" className="contact__label">Message</label>
                 <textarea
-                  id="message"
-                  name="message"
-                  className="form-textarea"
+                  id="message" name="message"
+                  className="contact__textarea"
                   placeholder="Tell us about your fitness goals..."
                   rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                ></textarea>
+                  value={formData.message} onChange={handleChange}
+                />
               </div>
-
-              <button type="submit" className="btn-primary form-submit-btn">
-                <MessageCircle size={20} />
+              <button type="submit" className="contact__submit" id="contact-submit-btn">
+                <MessageCircle size={16} />
                 Send via WhatsApp
               </button>
             </form>
-          </GlassCard>
+          </div>
 
-          {/* Contact Info & Map */}
-          <div className="contact-info-section">
-            {/* Contact Info Cards */}
-            <GlassCard className="info-card">
-              <div className="info-icon">
-                <Phone size={24} />
-              </div>
-              <div className="info-content">
-                <h4 className="info-title">Call Us</h4>
-                <a href="tel:9028468563" className="info-link">9028468563</a>
-                <a href="tel:8668891406" className="info-link">8668891406</a>
-              </div>
-            </GlassCard>
+          {/* Info + actions */}
+          <div className="contact__info reveal-right">
 
-            <GlassCard className="info-card">
-              <div className="info-icon">
-                <MessageCircle size={24} />
+            {INFO.map((item) => (
+              <div key={item.title} className="contact__info-item">
+                <div className="contact__info-icon-wrap">{item.icon}</div>
+                <div className="contact__info-body">
+                  <h4 className="contact__info-title">{item.title}</h4>
+                  <div>{item.content}</div>
+                </div>
               </div>
-              <div className="info-content">
-                <h4 className="info-title">WhatsApp</h4>
-                <a 
-                  href="https://wa.me/919028468563" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="info-link"
-                >
-                  Chat with us
-                </a>
-              </div>
-            </GlassCard>
+            ))}
 
-            <GlassCard className="info-card">
-              <div className="info-icon">
-                <Clock size={24} />
-              </div>
-              <div className="info-content">
-                <h4 className="info-title">Timings</h4>
-                <p className="info-text">Morning: 5:00 AM - 10:00 AM</p>
-                <p className="info-text">Evening: 5:00 PM - 10:00 PM</p>
-              </div>
-            </GlassCard>
+            {/* Prominent action links */}
+            <div className="contact__actions">
+              <a
+                href="https://maps.app.goo.gl/DY5aPzJaSD6x7QKH9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact__action-link"
+                id="contact-directions-btn"
+              >
+                <MapPin size={16} /> Get Directions →
+              </a>
+              <a
+                href="tel:9028468563"
+                className="contact__action-link"
+                id="contact-call-btn"
+              >
+                <Phone size={16} /> Call Now →
+              </a>
+              <a
+                href="https://wa.me/919028468563"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact__action-link"
+                id="contact-wa-btn"
+              >
+                <MessageCircle size={16} /> WhatsApp TTZ →
+              </a>
+            </div>
 
-            <GlassCard className="info-card">
-              <div className="info-icon">
-                <Instagram size={24} />
-              </div>
-              <div className="info-content">
-                <h4 className="info-title">Follow Us</h4>
-                <a 
-                  href="https://www.instagram.com/ttz_fitness_24/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="info-link"
-                >
-                  @ttz_fitness_24
-                </a>
-              </div>
-            </GlassCard>
-
-            {/* Google Maps */}
-            <GlassCard className="map-card">
-              <div className="map-header">
-                <MapPin size={24} className="map-icon" />
-                <h4 className="map-title">Visit Us</h4>
-              </div>
-              <div className="map-container">
-                <div className="contact-map">
-  <a
-    href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUyCggAEEUYFhgeGDkyCAgBEAAYFhgeMg0IAhAAGIYDGIAEGIoFMg0IAxAAGIYDGIAEGIoFMgoIBBAAGIAEGKIEMgoIBRAAGIAEGKIEMgcIBhAAGO8FMgoIBxAAGIAEGKIE0gEIMzc4OGowajSoAgCwAgE&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KfUHz6KEmds7MZui6ltRJ_1G&daddr=11,+Gut+No.+142,+Plot+no-+77,+18,+near+Ayyappa+Swami+Temple,+Satara+Parisar,+Chhatrapati+Sambhajinagar,+Maharashtra+431010"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="map-button"
-  >
-    📍 Open Location in Google Maps
-  </a>
-</div>
-
-              </div>
-              <p className="map-address">
-                Chhatrapati Sambhajinagar, Maharashtra
-              </p>
-            </GlassCard>
           </div>
         </div>
       </div>
     </section>
   );
-  <a
-  href="https://www.google.com/maps/dir/?api=1&destination=19.8448928,75.333816"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="directions-btn"
->
-  Get Directions
-</a>
-
 };
 
 export default Contact;

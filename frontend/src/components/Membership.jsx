@@ -1,131 +1,115 @@
 import React from 'react';
-import GlassCard from './GlassCard';
 import { Check, Clock, Phone } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
 import './Membership.css';
 
 /**
- * Membership Section Component
- * Features:
- * - Membership plans with pricing
- * - Gym timings
- * - Call to action for joining
+ * Membership — Sharp-edged pricing cards.
+ * All pricing data and phone/WhatsApp links preserved exactly.
  */
+const PLANS = [
+  { duration: '1 Month',   price: '₹999',   bonus: null,            popular: false },
+  { duration: '3 Months',  price: '₹2,499', bonus: '1 Month Free',  popular: false },
+  { duration: '6 Months',  price: '₹4,499', bonus: '2 Months Free', popular: true  },
+  { duration: '12 Months', price: '₹7,999', bonus: '3 Months Free', popular: false },
+];
+
+const FEATURES = [
+  'All Equipment Access',
+  'Group Classes',
+  'Nutrition Guidance',
+  'Locker Facility',
+];
+
 const Membership = () => {
-  const membershipPlans = [
-    {
-      duration: '1 Month',
-      price: '₹999',
-      bonus: null,
-      popular: false
-    },
-    {
-      duration: '3 Months',
-      price: '₹2499',
-      bonus: '1 Month Free',
-      popular: false
-    },
-    {
-      duration: '6 Months',
-      price: '₹4499',
-      bonus: '2 Months Free',
-      popular: true
-    },
-    {
-      duration: '12 Months',
-      price: '₹7999',
-      bonus: '3 Months Free',
-      popular: false
-    }
-  ];
+  const ref = useScrollReveal();
 
   return (
-    <section id="membership" className="membership-section">
-      <div className="membership-container">
-        {/* Section Header */}
-        <div className="section-header">
-          <h2 className="section-title">Membership Plans</h2>
-          <p className="section-subtitle">
-            Choose the Perfect Plan For Your Fitness Journey
-          </p>
+    <section id="membership" className="membership" ref={ref}>
+      <div className="membership__container">
+
+        {/* Editorial header */}
+        <div className="membership__header">
+          <div className="membership__header-left reveal-left">
+            <span className="section-eyebrow">Invest in Yourself</span>
+            <h2 className="membership__title">Membership</h2>
+          </div>
+          <div className="membership__header-right reveal-right">
+            <p className="membership__lead">
+              Choose the plan that fits your journey. Every membership includes
+              full access to all facilities, group classes, and nutrition guidance.
+            </p>
+            {/* Timings inline with header */}
+            <div className="membership__timings">
+              <Clock size={16} className="membership__clock-icon" />
+              <span>Morning 5:00 – 10:00 AM</span>
+              <span className="membership__timing-sep">·</span>
+              <span>Evening 5:00 – 10:00 PM</span>
+            </div>
+          </div>
         </div>
 
-        {/* Membership Plans Grid */}
-        <div className="plans-grid">
-          {membershipPlans.map((plan, index) => (
-            <GlassCard 
-              key={index} 
-              hover 
-              className={`plan-card ${plan.popular ? 'plan-popular' : ''}`}
+        {/* Plans grid */}
+        <div className="membership__grid">
+          {PLANS.map((plan, i) => (
+            <div
+              key={plan.duration}
+              className={`membership__card reveal${plan.popular ? ' membership__card--popular' : ''}`}
+              style={{ transitionDelay: `${i * 80}ms` }}
             >
-              {plan.popular && <div className="popular-badge">BEST VALUE</div>}
-              
-              <div className="plan-header">
-                <h3 className="plan-duration">{plan.duration}</h3>
-                <div className="plan-price">{plan.price}</div>
-                {plan.bonus && <div className="plan-bonus">{plan.bonus}</div>}
+              {plan.popular && (
+                <div className="membership__badge">Best Value</div>
+              )}
+
+              <div className="membership__card-top">
+                <div className="membership__duration">{plan.duration}</div>
+                <div className="membership__price">{plan.price}</div>
+                {plan.bonus && (
+                  <div className="membership__bonus">+ {plan.bonus}</div>
+                )}
               </div>
 
-              <div className="plan-features">
-                <div className="plan-feature">
-                  <Check size={20} className="feature-check" />
-                  <span>All Equipment Access</span>
-                </div>
-                <div className="plan-feature">
-                  <Check size={20} className="feature-check" />
-                  <span>Group Classes</span>
-                </div>
-                <div className="plan-feature">
-                  <Check size={20} className="feature-check" />
-                  <span>Nutrition Guidance</span>
-                </div>
-                <div className="plan-feature">
-                  <Check size={20} className="feature-check" />
-                  <span>Locker Facility</span>
-                </div>
-              </div>
+              <ul className="membership__features">
+                {FEATURES.map((f) => (
+                  <li key={f} className="membership__feature">
+                    <Check size={14} className="membership__check" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
 
-              <a href="https://wa.link/z36oiv" target="_blank" rel="noopener noreferrer" className="btn-primary plan-btn">
+              <a
+                href="https://wa.link/z36oiv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`membership__btn${plan.popular ? ' membership__btn--primary' : ''}`}
+              >
                 Book Now
               </a>
-            </GlassCard>
+            </div>
           ))}
         </div>
 
-        {/* Timings Section */}
-        <GlassCard className="timings-card">
-          <div className="timings-header">
-            <Clock size={40} className="timings-icon" />
-            <h3 className="timings-heading">Gym Timings</h3>
-          </div>
-          
-          <div className="timings-content">
-            <div className="timing-slot">
-              <div className="timing-label">Morning Batch</div>
-              <div className="timing-value">5:00 AM - 10:00 AM</div>
-            </div>
-            <div className="timing-divider"></div>
-            <div className="timing-slot">
-              <div className="timing-label">Evening Batch</div>
-              <div className="timing-value">5:00 PM - 10:00 PM</div>
-            </div>
-          </div>
-        </GlassCard>
-
-        {/* Contact CTA */}
-        <div className="membership-cta">
-          <h3 className="cta-heading">Crush Your 2026 Goals With TTZ Fitness!</h3>
-          <p className="cta-text">We have the perfect plan for you. Call us today!</p>
-          <div className="cta-buttons">
-            <a href="tel:9028468563" className="btn-primary cta-btn">
-              <Phone size={20} />
+        {/* Bottom CTA */}
+        <div className="membership__cta reveal">
+          <h3 className="membership__cta-heading">
+            Crush Your 2026 Goals With TTZ Fitness
+          </h3>
+          <p className="membership__cta-sub">
+            Call us today and we'll find the perfect plan for you.
+          </p>
+          <div className="membership__cta-phones">
+            <a href="tel:9028468563" className="membership__phone-link">
+              <Phone size={16} />
               9028468563
             </a>
-            <a href="tel:8668891406" className="btn-primary cta-btn">
-              <Phone size={20} />
+            <a href="tel:8668891406" className="membership__phone-link">
+              <Phone size={16} />
               8668891406
             </a>
           </div>
         </div>
+
       </div>
     </section>
   );

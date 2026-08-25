@@ -3,170 +3,221 @@
 @tailwind utilities;
 
 /**
- * TTZ FITNESS - Global Styles
- * Design System: Pixel Pushers/Neon Tech Glassmorphism
+ * TTZ FITNESS — Luxury Design System
+ * Palette: Deep blacks + warm gold accent
+ * Typography: Bebas Neue (headings) + Inter (body)
  */
 
-/* CSS Variables - TTZ Fitness Brand Colors */
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
 :root {
   /* Backgrounds */
-  --bg-page: #1a1c1b;
-  --bg-card: #302f2c;
-  --bg-light: #dfddd6;
-  
-  /* Text Colors */
-  --text-primary: #d9fb06;
-  --text-secondary: #888680;
-  --text-muted: #302f2c;
-  --text-inverse: #1a1c1b;
-  --text-light: #dfddd6;
-  
+  --bg-void:       #080808;
+  --bg-base:       #0D0D0D;
+  --bg-surface:    #111111;
+  --bg-elevated:   #191919;
+  --bg-card:       #151515;
+  --bg-card-hover: #1C1C1C;
+
+  /* Gold Accent System */
+  --gold:          #C9A84C;
+  --gold-light:    #DEB96A;
+  --gold-dim:      #A8883A;
+  --gold-glow:     rgba(201, 168, 76, 0.2);
+  --gold-subtle:   rgba(201, 168, 76, 0.08);
+
+  /* Text */
+  --text-primary:  #F5F0E8;
+  --text-secondary:#B8B0A0;
+  --text-muted:    #6B6560;
+  --text-gold:     #C9A84C;
+
   /* Borders */
-  --border-light: rgba(63, 72, 22, 0.5);
-  --border-medium: #3f4816;
-  --border-strong: #888680;
-  
-  /* Brand Colors */
-  --brand-primary: #d9fb06;
-  --brand-hover: rgba(217, 251, 6, 0.8);
-  --brand-active: rgba(217, 251, 6, 0.6);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-light:  rgba(255, 255, 255, 0.10);
+  --border-gold:   rgba(201, 168, 76, 0.30);
+  --border-gold-strong: rgba(201, 168, 76, 0.60);
+
+  /* Spacing Scale */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   40px;
+  --space-2xl:  64px;
+  --space-3xl:  96px;
+  --space-4xl:  128px;
+
+  /* Typography Scale */
+  --font-display: 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-serif:   'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Inter', Arial, sans-serif;
+
+  /* Motion */
+  --ease-luxury:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-snap:    cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   200ms;
+  --duration-mid:    400ms;
+  --duration-slow:   700ms;
+
+  /* Radii */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card:  0 1px 3px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-gold:  0 0 32px rgba(201, 168, 76, 0.15), 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-glow:  0 0 60px rgba(201, 168, 76, 0.12);
+
+  /* Header height tokens — used by Hero + any fixed-header offset */
+  --header-utility-h: 40px;
+  --header-nav-h:     72px;
+  --header-total-h:   112px; /* utility + nav */
+
+  /* Shadcn/Radix compatibility */
+  --background: 0 0% 5%;
+  --foreground:  36 20% 95%;
+  --card: 0 0% 8%;
+  --card-foreground: 36 20% 95%;
+  --popover: 0 0% 8%;
+  --popover-foreground: 36 20% 95%;
+  --primary: 40 55% 54%;
+  --primary-foreground: 0 0% 5%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 36 20% 95%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 30 8% 55%;
+  --accent: 40 55% 54%;
+  --accent-foreground: 0 0% 5%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 12%;
+  --input: 0 0% 12%;
+  --ring: 40 55% 54%;
+  --radius: 0.5rem;
 }
 
-/* Global Resets */
-* {
+/* ============================================
+   GLOBAL RESETS
+   ============================================ */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styles */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  margin: 0;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-page);
-  color: var(--text-light);
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* Code Styling */
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
-/* Remove default button styles */
-button {
-  font-family: inherit;
-}
-
-/* Remove default link underlines */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Image optimization */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ============================================
+   SELECTION
+   ============================================ */
+::selection {
+  background: var(--gold-glow);
+  color: var(--gold-light);
+}
+
+/* ============================================
+   SHADCN LAYER BASE
+   ============================================ */
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
-  
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+
+  [data-debug-wrapper="true"] { display: contents !important; }
+  [data-debug-wrapper="true"] > * {
+    margin-left: inherit; margin-right: inherit;
+    margin-top: inherit; margin-bottom: inherit;
+    padding-left: inherit; padding-right: inherit;
+    padding-top: inherit; padding-bottom: inherit;
+    column-gap: inherit; row-gap: inherit; gap: inherit;
+    border-left-width: inherit; border-right-width: inherit;
+    border-top-width: inherit; border-bottom-width: inherit;
+    border-left-style: inherit; border-right-style: inherit;
+    border-top-style: inherit; border-bottom-style: inherit;
+    border-left-color: inherit; border-right-color: inherit;
+    border-top-color: inherit; border-bottom-color: inherit;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+/* ============================================
+   SCROLL-TRIGGERED ANIMATION CLASSES
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-slow) var(--ease-luxury),
+              transform var(--duration-slow) var(--ease-luxury);
 }
 
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
-    }
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
-    }
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity var(--duration-slow) var(--ease-luxury),
+              transform var(--duration-slow) var(--ease-luxury);
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity var(--duration-slow) var(--ease-luxury),
+              transform var(--duration-slow) var(--ease-luxury);
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
