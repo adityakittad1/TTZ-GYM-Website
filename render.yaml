@@ -29,7 +29,7 @@ services:
     envVars:
       # ── CORS: set to your Vercel frontend URL after first frontend deploy ──
       - key: CORS_ORIGINS
-        value: "https://ttz-frontend.onrender.com"
+        value: "https://ttzfitness.vercel.app,https://ttz-frontend.onrender.com"
 
       # ── Admin credentials (fill these in the Render dashboard) ────────────
       - key: ADMIN_USERNAME
