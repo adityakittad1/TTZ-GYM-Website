@@ -1,6 +1,7 @@
 /**
  * TTZ FITNESS — Global App Styles
- * Luxury dark theme with warm gold accents
+ * Premium dark brand system: deep blacks + warm gold
+ * Typography: Bebas Neue (display) + Inter (body)
  */
 
 /* ============================================
@@ -32,15 +33,28 @@ main {
   margin-bottom: var(--space-2xl);
 }
 
+/* Eyebrow label — restrained, editorial */
 .section-eyebrow {
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-eyebrow::before {
+  content: '';
   display: block;
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .section-title {
@@ -48,12 +62,12 @@ main {
   font-size: clamp(2.5rem, 5vw, 4rem);
   letter-spacing: 0.04em;
   color: var(--text-primary);
-  line-height: 1.05;
+  line-height: 1.02;
   margin-bottom: var(--space-md);
 }
 
 .section-subtitle {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   color: var(--text-secondary);
   max-width: 540px;
   margin: 0 auto;
@@ -61,10 +75,10 @@ main {
 }
 
 /* ============================================
-   BUTTON SYSTEM
+   BUTTON SYSTEM — Sharp, intentional, premium
    ============================================ */
 
-/* Primary — Gold filled */
+/* Primary — Gold filled, sharp edges */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -73,61 +87,73 @@ main {
   background: var(--gold);
   color: #000;
   border: none;
-  border-radius: var(--radius-pill);
-  padding: 14px 36px;
+  border-radius: 0;
+  padding: 15px 36px;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--duration-fast) var(--ease-snap),
-              transform var(--duration-fast) var(--ease-snap),
-              box-shadow var(--duration-fast) var(--ease-snap);
-  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.25);
+  transition:
+    background var(--duration-fast) var(--ease-snap),
+    transform   var(--duration-fast) var(--ease-snap),
+    box-shadow  var(--duration-fast) var(--ease-snap);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.20);
   line-height: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background var(--duration-fast) var(--ease-snap);
 }
 
 .btn-primary:hover {
   background: var(--gold-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.40);
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.35);
 }
 
 .btn-primary:active {
   transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.20);
+  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.15);
 }
 
-/* Secondary — Gold outlined */
+/* Secondary — Outlined, sharp */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
   background: transparent;
-  color: var(--gold);
-  border: 1.5px solid var(--border-gold-strong);
-  border-radius: var(--radius-pill);
-  padding: 13px 36px;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0;
+  padding: 14px 32px;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 0.875rem;
-  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--duration-fast) var(--ease-snap),
-              color var(--duration-fast) var(--ease-snap),
-              transform var(--duration-fast) var(--ease-snap),
-              border-color var(--duration-fast) var(--ease-snap);
+  transition:
+    background    var(--duration-fast) var(--ease-snap),
+    border-color  var(--duration-fast) var(--ease-snap),
+    color         var(--duration-fast) var(--ease-snap),
+    transform     var(--duration-fast) var(--ease-snap);
   line-height: 1;
 }
 
 .btn-secondary:hover {
-  background: var(--gold-subtle);
-  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.45);
   transform: translateY(-2px);
 }
 
@@ -144,11 +170,11 @@ main {
   background: transparent;
   color: var(--text-secondary);
   border: none;
-  padding: 12px 24px;
+  padding: 12px 20px;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
   cursor: pointer;
   text-decoration: none;
   transition: color var(--duration-fast) var(--ease-snap);
@@ -160,38 +186,20 @@ main {
 }
 
 /* ============================================
-   CARD SYSTEM
-   ============================================ */
-.luxury-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  transition: border-color var(--duration-mid) var(--ease-luxury),
-              transform var(--duration-mid) var(--ease-luxury),
-              box-shadow var(--duration-mid) var(--ease-luxury);
-}
-
-.luxury-card:hover {
-  border-color: var(--border-gold);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-gold);
-}
-
-/* ============================================
-   DIVIDER
-   ============================================ */
-.gold-divider {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  margin: var(--space-md) auto;
-}
-
-/* ============================================
    GOLD TEXT ACCENT
    ============================================ */
 .text-gold { color: var(--gold); }
+
+/* ============================================
+   DIVIDER — Editorial horizontal rule
+   ============================================ */
+.gold-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+  display: block;
+}
 
 /* ============================================
    RESPONSIVE UTILITIES
@@ -203,7 +211,7 @@ main {
 
   .btn-primary,
   .btn-secondary {
-    padding: 12px 28px;
-    font-size: 0.8125rem;
+    padding: 13px 26px;
+    font-size: 0.75rem;
   }
 }

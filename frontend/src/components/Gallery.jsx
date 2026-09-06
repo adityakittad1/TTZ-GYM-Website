@@ -4,7 +4,7 @@ import './Gallery.css';
 
 /**
  * Gallery — Full-width editorial mosaic.
- * No section-container wrapper — bleeds to edges.
+ * Asymmetric header (title left, subtitle right).
  * Lightbox with keyboard navigation (Escape, arrow keys).
  */
 const IMAGES = [
@@ -25,7 +25,7 @@ const Gallery = () => {
   const next = () => setLightboxIdx((i) => (i + 1) % IMAGES.length);
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'Escape')       closeLightbox();
     else if (e.key === 'ArrowLeft')  prev();
     else if (e.key === 'ArrowRight') next();
   };
@@ -33,12 +33,15 @@ const Gallery = () => {
   return (
     <section id="gallery" className="gallery" ref={ref}>
 
-      {/* Header — inside a container */}
+      {/* Asymmetric header — inside container */}
       <div className="gallery__header section-container reveal">
-        <span className="section-eyebrow">The Space</span>
-        <h2 className="gallery__title">Our Facility</h2>
+        <div>
+          <span className="section-eyebrow">The Space</span>
+          <h2 className="gallery__title">Our<br />Facility</h2>
+        </div>
         <p className="gallery__subtitle">
-          State-of-the-art equipment in a professional, premium environment built for serious training.
+          State-of-the-art equipment in a professional, premium environment
+          built for serious training.
         </p>
       </div>
 

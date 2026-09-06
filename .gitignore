@@ -77,4 +77,22 @@ agenthub/agents/youtube/db
 .cache/
 
 # Mobile development
-android-sdk/ 
+android-sdk/
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  TTZ FITNESS — Production Security Rules
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Backend secrets — NEVER commit real credentials
+backend/.env
+backend/data.json         # Local JSON database (ephemeral, not source code)
+
+# Frontend secrets & production env
+frontend/.env             # Local dev — backend URL set via platform dashboard
+frontend/.env.production  # Contains real backend URL — set via platform dashboard
+
+# React production build (built by CI/CD, not committed)
+frontend/build/
+
+# The .env.production.example is safe to commit (no real secrets)
+!backend/.env.production.example

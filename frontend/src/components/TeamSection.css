@@ -1,112 +1,168 @@
 /* ================================================================
-   TEAM SECTION — WhyTTZ + Trainers merged
+   TEAM SECTION — Asymmetric editorial: reasons left, portraits right
    ================================================================ */
 
 .team-section {
-  background: var(--bg-base);
-  padding: 72px 0;
+  background: var(--bg-surface);
+  padding: 0;
+  overflow: hidden;
 }
 
 .team-section__inner {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
+  min-height: 620px;
 }
 
-/* ── Left — Why TTZ ── */
+/* ── Left: Why TTZ — dark padded column ── */
+.team-section__left {
+  padding: 96px 80px 96px var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-base);
+  border-right: 1px solid var(--border-subtle);
+}
+
 .team-section__title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
-  letter-spacing: 0.04em;
-  line-height: 0.96;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
   color: var(--text-primary);
-  margin: 10px 0 32px;
+  margin: 16px 0 44px;
 }
 
 .team-section__accent {
   color: var(--gold);
+  display: block;
 }
 
+/* Reasons — horizontal line items */
 .team-section__reasons {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 36px;
+  margin-bottom: 44px;
 }
 
 .team-section__reason {
   display: flex;
   align-items: flex-start;
-  gap: 18px;
-  padding: 18px 0;
+  gap: 20px;
+  padding: 22px 0;
   border-bottom: 1px solid var(--border-subtle);
+  position: relative;
 }
 
 .team-section__reason:first-child {
   padding-top: 0;
 }
 
+.team-section__reason::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.5s var(--ease-luxury);
+}
+
+.team-section__reason:hover::after {
+  width: 100%;
+}
+
 .team-section__reason-num {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.9rem;
   letter-spacing: 0.08em;
   color: var(--gold);
   flex-shrink: 0;
-  opacity: 0.65;
-  padding-top: 1px;
+  opacity: 0.55;
+  padding-top: 2px;
+  user-select: none;
 }
 
 .team-section__reason-heading {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--text-primary);
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .team-section__reason-body {
-  font-size: 0.8rem;
-  line-height: 1.6;
+  font-size: 0.825rem;
+  line-height: 1.65;
   color: var(--text-secondary);
 }
 
+/* CTA link */
 .team-section__cta {
-  font-size: 0.78rem;
+  align-self: flex-start;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
   text-decoration: none;
-  transition: letter-spacing var(--duration-fast) var(--ease-snap);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap var(--duration-fast) var(--ease-snap);
+}
+
+.team-section__cta::after {
+  content: '→';
+  font-size: 0.85em;
+  transition: transform var(--duration-fast) var(--ease-snap);
+  display: inline-block;
 }
 
 .team-section__cta:hover {
-  letter-spacing: 0.2em;
+  gap: 14px;
 }
 
-/* ── Right — Trainers ── */
+.team-section__cta:hover::after {
+  transform: translateX(4px);
+}
+
+/* ── Right: Founders — stacked portrait column ── */
+.team-section__right {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base);
+}
+
 .team-section__trainers-header {
-  margin-bottom: 20px;
+  padding: 48px 48px 28px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .team-section__trainers {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3px;
+  flex: 1;
+  gap: 0;
 }
 
 .team-section__trainer {
   overflow: hidden;
   background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  position: relative;
+  cursor: default;
+}
+
+.team-section__trainer:last-child {
+  border-right: none;
 }
 
 .team-section__trainer-img-wrap {
   position: relative;
-  height: 280px;
+  height: 340px;
   overflow: hidden;
 }
 
@@ -115,11 +171,25 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: transform 0.6s var(--ease-luxury);
+  transition: transform 0.7s var(--ease-luxury);
+  display: block;
 }
 
 .team-section__trainer:hover .team-section__trainer-img {
-  transform: scale(1.04);
+  transform: scale(1.05);
+}
+
+/* Gradient over portrait */
+.team-section__trainer-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13, 13, 13, 0.7) 0%,
+    rgba(13, 13, 13, 0.0) 55%
+  );
+  z-index: 1;
 }
 
 .team-section__trainer-specialty {
@@ -128,16 +198,17 @@
   left: 0;
   background: var(--gold);
   color: #000;
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  padding: 6px 12px;
+  padding: 7px 14px;
+  z-index: 2;
 }
 
 .team-section__trainer-info {
-  padding: 14px 16px 18px;
-  border-top: 2px solid var(--border-subtle);
+  padding: 18px 20px 22px;
+  border-top: 1px solid var(--border-subtle);
   transition: border-top-color var(--duration-mid) var(--ease-luxury);
 }
 
@@ -147,46 +218,56 @@
 
 .team-section__trainer-name {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
   color: var(--text-primary);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   line-height: 1.1;
 }
 
 .team-section__trainer-role {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold);
+  opacity: 0.8;
 }
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
-  .team-section__inner {
-    gap: 56px;
+  .team-section__left {
+    padding: 72px 56px 72px var(--space-lg);
+  }
+
+  .team-section__trainers-header {
+    padding: 40px 36px 24px;
   }
 }
 
 @media (max-width: 900px) {
-  .team-section {
-    padding: 56px 0;
-  }
-
   .team-section__inner {
     grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 0 var(--space-md);
+  }
+
+  .team-section__left {
+    padding: 64px var(--space-md);
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .team-section__trainer-img-wrap {
-    height: 240px;
+    height: 280px;
   }
 }
 
 @media (max-width: 480px) {
   .team-section__trainers {
     grid-template-columns: 1fr;
+  }
+
+  .team-section__trainer {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
   }
 }

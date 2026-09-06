@@ -1,0 +1,82 @@
+# ══════════════════════════════════════════════════════════════════════════════
+#  render.yaml — TTZ FITNESS One-Click Deploy on Render.com
+#
+#  Defines two services:
+#    1. ttz-backend  — FastAPI Python web service (free tier)
+#    2. ttz-frontend — React static site (free tier)
+#
+#  Deploy steps:
+#    1. Push this file to GitHub
+#    2. Go to https://dashboard.render.com → New → Blueprint
+#    3. Connect your repo → Render reads this file automatically
+#    4. Fill in the secret env vars (marked sync: false) in the dashboard
+# ══════════════════════════════════════════════════════════════════════════════
+
+services:
+  # ── 1. FastAPI Backend ─────────────────────────────────────────────────────
+  - type: web
+    name: ttz-backend
+    runtime: python
+    region: singapore        # Closest to Chhatrapati Sambhajinagar (India)
+    plan: free
+    rootDir: backend
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /api/
+
+    envVars:
+      # ── CORS: set to your Vercel frontend URL after first frontend deploy ──
+      - key: CORS_ORIGINS
+        value: "https://ttz-fitness.vercel.app"   # UPDATE THIS after Vercel deploy
+
+      # ── Admin credentials (fill these in the Render dashboard) ────────────
+      - key: ADMIN_USERNAME
+        sync: false          # Render prompts you to set this secret manually
+
+      - key: ADMIN_PASSWORD_HASH
+        sync: false          # Bcrypt hash — generate with: python3 -c "import bcrypt; print(bcrypt.hashpw(b'YOUR_PW', bcrypt.gensalt(12)).decode())"
+
+      - key: JWT_SECRET_KEY
+        sync: false          # 64-byte random secret — generate with: python3 -c "import secrets,base64; print(base64.urlsafe_b64encode(secrets.token_bytes(64)).decode())"
+
+  # ── 2. React Frontend Static Site ─────────────────────────────────────────
+  - type: web
+    name: ttz-frontend
+    runtime: static
+    region: singapore
+    plan: free
+    rootDir: frontend
+
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+
+    # SPA routing: send all paths to index.html (React Router handles them)
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
+
+    headers:
+      # Security headers for production
+      - path: "/*"
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: "/*"
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: "/*"
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      # Long-term cache for hashed static assets
+      - path: "/static/*"
+        name: Cache-Control
+        value: "public, max-age=31536000, immutable"
+
+    envVars:
+      # ── Set this to your Render backend URL after backend is deployed ──────
+      - key: REACT_APP_BACKEND_URL
+        value: "https://ttz-backend.onrender.com"   # UPDATE with your actual backend URL
+      - key: GENERATE_SOURCEMAP
+        value: "false"

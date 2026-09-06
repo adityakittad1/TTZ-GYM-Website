@@ -4,9 +4,9 @@ import './TeamSection.css';
 
 /**
  * TeamSection — WhyTTZ + Trainers merged.
- * Left: 3 editorial reasons why TTZ.
- * Right: 2 trainer portraits (compact).
- * Replaces two separate full-height sections.
+ * Left: dark editorial column with 3 numbered reasons.
+ * Right: founder portraits with gradient overlays.
+ * Layout: full-bleed split (no section-container wrapper).
  */
 const REASONS = [
   {
@@ -49,7 +49,7 @@ const TeamSection = () => {
         <div className="team-section__left reveal-left">
           <span className="section-eyebrow">Why TTZ</span>
           <h2 className="team-section__title">
-            More Than<br />
+            More Than
             <span className="team-section__accent">A Gym.</span>
           </h2>
 
@@ -71,7 +71,7 @@ const TeamSection = () => {
             rel="noopener noreferrer"
             className="team-section__cta"
           >
-            Join the Family →
+            Join the Family
           </a>
         </div>
 

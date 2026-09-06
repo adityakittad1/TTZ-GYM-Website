@@ -1,0 +1,239 @@
+/* ================================================================
+   TTZ FITNESS — BRAND ENTRANCE / PRELOADER
+   Cinematic identity reveal. Minimal. Intentional. Premium.
+
+   Sequence:
+   0.00s → Dark screen, ambient warmth appears
+   0.35s → TTZ clip-path wipe (left → right)
+   0.82s → Gold separator line extends from center
+   0.88s → FITNESS text rises in
+   1.10s → Tagline materializes
+   1.20s → Shimmer trace passes once across the TTZ letters [micro-detail]
+   1.45s → Curtain lifts (translateY → −100%)
+   2.10s → Component unmounts
+   ================================================================ */
+
+/* ── Keyframes ─────────────────────────────────────────────────── */
+
+/* TTZ: horizontal clip-path wipe, left to right */
+@keyframes ttz-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0   0% 0 0); }
+}
+
+/* FITNESS: rise from below + fade */
+@keyframes fitness-rise {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Gold separator line: expand from center outward */
+@keyframes line-expand {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Tagline: pure opacity */
+@keyframes tagline-appear {
+  from { opacity: 0; }
+  to   { opacity: 0.38; }
+}
+
+/* Ambient warm glow behind brand mark */
+@keyframes glow-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* Shimmer: a warm highlight sweeps once left→right over the TTZ text */
+@keyframes shimmer-pass {
+  0%   { left: -80%; opacity: 0; }
+  8%   { opacity: 1;  }
+  92%  { opacity: 1;  }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* Curtain exit: slides up off the viewport */
+@keyframes curtain-lift {
+  from { transform: translateY(0%); }
+  to   { transform: translateY(-100%); }
+}
+
+/* ── Preloader shell ────────────────────────────────────────────── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #060606;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  /* Keep below everything interactive when in exit */
+}
+
+.preloader--exit {
+  animation: curtain-lift 0.65s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* ── Inner wrapper ──────────────────────────────────────────────── */
+.preloader__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* ── Ambient glow — almost imperceptible warm spotlight ─────────── */
+.preloader__glow {
+  position: absolute;
+  /* Centered behind the brand text */
+  width: clamp(280px, 45vw, 560px);
+  height: clamp(160px, 22vh, 280px);
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(200, 162, 74, 0.055) 0%,
+    transparent 72%
+  );
+  pointer-events: none;
+  animation: glow-in 0.55s ease-out 0.1s both;
+}
+
+/* ── Brand container ────────────────────────────────────────────── */
+.preloader__brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── TTZ wordmark wrapper (for shimmer overflow clipping) ─────────── */
+.preloader__ttz-wrap {
+  position: relative;
+  overflow: hidden;
+  line-height: 0.95;
+}
+
+/* Shimmer overlay — single pass, one premium micro-detail */
+.preloader__ttz-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(200, 162, 74, 0.10) 40%,
+    rgba(255, 245, 210, 0.18) 50%,
+    rgba(200, 162, 74, 0.10) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: shimmer-pass 0.55s cubic-bezier(0.4, 0, 0.6, 1) 1.22s both;
+}
+
+/* ── TTZ wordmark ───────────────────────────────────────────────── */
+.preloader__ttz {
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(5.5rem, 14vw, 11rem);
+  letter-spacing: 0.065em;
+  color: #F2EDE3;
+  line-height: 0.95;
+
+  /* Hidden until clip-path animates */
+  clip-path: inset(0 100% 0 0);
+  animation: ttz-wipe 0.52s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+  will-change: clip-path;
+}
+
+/* ── Gold separator line ────────────────────────────────────────── */
+.preloader__line {
+  width: 44px;
+  height: 1px;
+  background: #C8A24A;
+  transform: scaleX(0);
+  transform-origin: center center;
+  margin: 11px 0 13px;
+  animation: line-expand 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.82s both;
+}
+
+/* ── FITNESS subtext ────────────────────────────────────────────── */
+.preloader__sub {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: clamp(0.52rem, 1.1vw, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.48em;
+  text-transform: uppercase;
+  color: #C8A24A;
+
+  opacity: 0;
+  animation: fitness-rise 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.88s both;
+}
+
+/* ── Tagline ─────────────────────────────────────────────────────  */
+.preloader__tagline {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: clamp(0.46rem, 0.9vw, 0.58rem);
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F2EDE3;
+
+  margin-top: 20px;
+  opacity: 0;
+  animation: tagline-appear 0.45s ease-out 1.10s both;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .preloader,
+  .preloader--exit {
+    animation: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  .preloader--exit {
+    opacity: 0 !important;
+  }
+
+  .preloader__ttz {
+    animation: none !important;
+    clip-path: inset(0 0% 0 0) !important;
+  }
+
+  /* Suppress shimmer */
+  .preloader__ttz-wrap::after {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .preloader__glow,
+  .preloader__line,
+  .preloader__sub,
+  .preloader__tagline {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .preloader__ttz {
+    font-size: clamp(4.5rem, 20vw, 7rem);
+    letter-spacing: 0.045em;
+  }
+
+  .preloader__sub {
+    letter-spacing: 0.38em;
+  }
+
+  .preloader__tagline {
+    display: none; /* Too crowded on very small screens */
+  }
+}

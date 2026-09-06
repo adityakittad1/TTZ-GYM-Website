@@ -24,6 +24,13 @@ const Admin = () => {
   const [settings, setSettings] = useState({ slideDuration: 8 });
   const [settingsSaving, setSettingsSaving] = useState(false);
 
+  const [siteSettings, setSiteSettings] = useState({
+    phoneMain: '', phoneAlt: '', whatsappNumber: '',
+    instagramUrl: '', locationName: '', locationMapUrl: '',
+    timingMorning: '', timingEvening: ''
+  });
+  const [siteSettingsSaving, setSiteSettingsSaving] = useState(false);
+
   // ── Auth ──
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -92,12 +99,24 @@ const Admin = () => {
     }
   }, []);
 
+  const loadSiteSettings = useCallback(async () => {
+    try {
+      const resp = await axios.get(`${BACKEND_URL}/api/settings/site`);
+      if (resp.data) {
+        setSiteSettings(resp.data);
+      }
+    } catch (err) {
+      console.error('Failed to load site settings', err);
+    }
+  }, []);
+
   useEffect(() => {
     if (token) {
       loadImages();
       loadSettings();
+      loadSiteSettings();
     }
-  }, [token, loadImages, loadSettings]);
+  }, [token, loadImages, loadSettings, loadSiteSettings]);
 
   // ── Upload ──
   const handleUpload = async (e) => {
@@ -165,6 +184,20 @@ const Admin = () => {
       setError('Failed to save settings');
     } finally {
       setSettingsSaving(false);
+    }
+  };
+
+  const handleSaveSiteSettings = async () => {
+    setSiteSettingsSaving(true);
+    setError('');
+    try {
+      await axios.put(`${BACKEND_URL}/api/settings/site`, siteSettings, { headers: authHeaders });
+      setSuccessMsg('Site details saved successfully!');
+      setTimeout(() => setSuccessMsg(''), 3000);
+    } catch (err) {
+      setError('Failed to save site details');
+    } finally {
+      setSiteSettingsSaving(false);
     }
   };
 
@@ -276,6 +309,53 @@ const Admin = () => {
             disabled={settingsSaving}
           >
             {settingsSaving ? 'Saving...' : 'Save Settings'}
+          </button>
+        </div>
+
+        {/* Site Details Settings */}
+        <div className="admin__settings-section" style={{ background: 'var(--bg-surface)', padding: '24px', borderRadius: '4px', marginBottom: '32px', border: '1px solid var(--border-subtle)' }}>
+          <h2 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '16px', fontFamily: 'var(--font-display)', letterSpacing: '0.04em' }}>Global Site Details</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+            
+            <div className="admin-field">
+              <label className="admin-label">Main Phone Number</label>
+              <input className="admin-input" type="text" value={siteSettings.phoneMain || ''} onChange={e => setSiteSettings({...siteSettings, phoneMain: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Alt Phone Number</label>
+              <input className="admin-input" type="text" value={siteSettings.phoneAlt || ''} onChange={e => setSiteSettings({...siteSettings, phoneAlt: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">WhatsApp Number (with country code)</label>
+              <input className="admin-input" type="text" value={siteSettings.whatsappNumber || ''} onChange={e => setSiteSettings({...siteSettings, whatsappNumber: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Instagram URL</label>
+              <input className="admin-input" type="text" value={siteSettings.instagramUrl || ''} onChange={e => setSiteSettings({...siteSettings, instagramUrl: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Location Address Text</label>
+              <input className="admin-input" type="text" value={siteSettings.locationName || ''} onChange={e => setSiteSettings({...siteSettings, locationName: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Google Maps URL</label>
+              <input className="admin-input" type="text" value={siteSettings.locationMapUrl || ''} onChange={e => setSiteSettings({...siteSettings, locationMapUrl: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Morning Timings</label>
+              <input className="admin-input" type="text" value={siteSettings.timingMorning || ''} onChange={e => setSiteSettings({...siteSettings, timingMorning: e.target.value})} />
+            </div>
+            <div className="admin-field">
+              <label className="admin-label">Evening Timings</label>
+              <input className="admin-input" type="text" value={siteSettings.timingEvening || ''} onChange={e => setSiteSettings({...siteSettings, timingEvening: e.target.value})} />
+            </div>
+          </div>
+          <button
+            onClick={handleSaveSiteSettings}
+            className="admin-btn admin-btn--primary"
+            disabled={siteSettingsSaving}
+          >
+            {siteSettingsSaving ? 'Saving...' : 'Save Site Details'}
           </button>
         </div>
 

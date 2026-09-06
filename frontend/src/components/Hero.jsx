@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { MessageCircle, Phone, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useContext } from 'react';
+import { MessageCircle, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 import useSlideshow from '../hooks/useSlideshow';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Hero.css';
 
 /**
- * Hero Section — Full-viewport crossfade slideshow
- * - 5 real gym photos auto-advance every 6s
- * - Dark gradient overlay for readability
- * - Bebas Neue display heading
- * - WhatsApp CTA + phone links preserved exactly
+ * Hero Section — Cinematic left-aligned layout
+ * - Full-viewport crossfade slideshow (5 real gym photos)
+ * - Left-anchored content with directional dark gradient
+ * - Right-side vertical stat strip (500+ Members, 4+ Years, 10+ Programs)
+ * - WhatsApp CTA + secondary CTA preserved exactly
  */
 
 const DEFAULT_HERO_IMAGES = [
@@ -21,16 +22,21 @@ const DEFAULT_HERO_IMAGES = [
 ];
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://${window.location.hostname}:8001`;
 
+const STATS = [
+  { value: '500+', label: 'Members' },
+  { value: '4+',   label: 'Years' },
+  { value: '10+',  label: 'Programs' },
+];
+
 const Hero = () => {
+  const siteSettings = useContext(SiteSettingsContext);
   const [slideDuration, setSlideDuration] = useState(8000);
   const [heroImages, setHeroImages] = useState(DEFAULT_HERO_IMAGES);
 
   useEffect(() => {
-    // Fetch settings
     axios.get(`${BACKEND_URL}/api/settings/hero`)
       .then((res) => {
         if (res.data && res.data.slideDuration) {
-          // Admin saves in seconds, we need milliseconds
           setSlideDuration(res.data.slideDuration * 1000);
         }
       })
@@ -38,7 +44,6 @@ const Hero = () => {
         console.error('Failed to fetch hero settings:', err);
       });
 
-    // Fetch images
     axios.get(`${BACKEND_URL}/api/hero-images`)
       .then((res) => {
         if (res.data && res.data.length > 0) {
@@ -82,43 +87,50 @@ const Hero = () => {
             />
           </div>
         ))}
-        {/* Multi-layer dark gradient overlay */}
+        {/* Cinematic directional overlays */}
         <div className="hero__overlay" />
         <div className="hero__overlay-bottom" />
+        <div className="hero__overlay-top" />
       </div>
 
-      {/* ── Content ── */}
+      {/* ── Left-aligned content ── */}
       <div className="hero__content">
+
+        {/* Eyebrow label */}
+        <div className="hero__eyebrow">
+          <span className="hero__eyebrow-line" aria-hidden="true" />
+          <span className="hero__eyebrow-text">Chhatrapati Sambhajinagar · Est. 2020</span>
+        </div>
 
         {/* Main heading */}
         <h1 className="hero__title">
           THE
-          <br />
           <span className="hero__title-accent">TRANSFORMATION</span>
-          <br />
           ZONE
         </h1>
 
         {/* Tagline */}
-        <p className="hero__tagline">Fitness  ·  Focus  ·  Future</p>
+        <p className="hero__tagline">
+          Expert coaching, premium equipment, and a community that pushes you further — every single day.
+        </p>
 
         {/* CTA buttons */}
         <div className="hero__actions">
           <a
-            href="https://wa.link/z36oiv"
+            href={`https://wa.me/${siteSettings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to book a free trial!`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary hero__btn-primary"
+            className="btn-primary"
             id="hero-join-now-btn"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={16} />
             Book a Free Trial
           </a>
           <a
-            href="https://wa.me/919028468563"
+            href={`https://wa.me/${siteSettings?.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary hero__btn-secondary"
+            className="btn-secondary"
             id="hero-whatsapp-btn"
           >
             WhatsApp Us
@@ -126,7 +138,17 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ── Slide counter ── */}
+      {/* ── Right: vertical stat strip ── */}
+      <div className="hero__stat-strip" aria-label="Key statistics">
+        {STATS.map((s) => (
+          <div key={s.label} className="hero__stat">
+            <span className="hero__stat-value">{s.value}</span>
+            <span className="hero__stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Slide counter (bottom-left) ── */}
       <div className="hero__counter" aria-live="polite" aria-label={`Slide ${currentIndex + 1} of ${heroImages.length}`}>
         <span className="hero__counter-current">
           {String(currentIndex + 1).padStart(2, '0')}
@@ -137,7 +159,7 @@ const Hero = () => {
         </span>
       </div>
 
-      {/* ── Slideshow Dots ── */}
+      {/* ── Slideshow dots (bottom-center) ── */}
       <div className="hero__dots" aria-label="Slideshow navigation">
         {heroImages.map((_, i) => (
           <button
@@ -149,9 +171,9 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ── Scroll indicator (bottom-right) ── */}
       <button className="hero__scroll-indicator" onClick={scrollDown} aria-label="Scroll down">
-        <ChevronDown size={20} />
+        <ChevronDown size={18} />
       </button>
     </section>
   );

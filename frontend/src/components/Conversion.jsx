@@ -4,21 +4,20 @@ import useScrollReveal from '../hooks/useScrollReveal';
 import './Conversion.css';
 
 /**
- * Conversion — Testimonials + FinalCTA merged.
- * Top: 3 featured testimonials in compact horizontal row.
- * Bottom: Cinematic CTA with gym photo background.
- * All 6 real testimonials preserved — 3 shown in cards,
- * 1 as a pull-quote in the CTA area.
+ * Conversion — Editorial testimonials + cinematic CTA.
+ * Testimonials: horizontal quote layout (not 3 identical cards).
+ * CTA: left-aligned, full-bleed background image.
+ * All original content and links preserved exactly.
  */
 const TESTIMONIALS = [
   {
     name: 'Rajesh Patil',
-    text: 'TTZ Fitness completely transformed my life. Lost 15kg in 6 months with expert guidance.',
+    text: 'TTZ Fitness completely transformed my life. Lost 15kg in 6 months with expert guidance from the coaches.',
     result: 'Fat Loss: 15 kg',
   },
   {
     name: 'Priya Sharma',
-    text: 'Best gym in Chhatrapati Sambhajinagar. The nutrition coaching from Mrs. Birajdar is invaluable.',
+    text: 'Best gym in Chhatrapati Sambhajinagar. The nutrition coaching from Mrs. Birajdar is genuinely invaluable.',
     result: '8 Month Journey',
   },
   {
@@ -31,7 +30,7 @@ const TESTIMONIALS = [
 const Stars = () => (
   <div className="conv__stars" aria-label="5 out of 5 stars">
     {[...Array(5)].map((_, i) => (
-      <Star key={i} size={12} fill="#C9A84C" color="#C9A84C" />
+      <Star key={i} size={11} fill="#C9A84C" color="#C9A84C" />
     ))}
   </div>
 );
@@ -42,27 +41,34 @@ const Conversion = () => {
   return (
     <section id="testimonials" className="conversion" ref={ref}>
 
-      {/* ── Top: 3 compact testimonial cards ── */}
+      {/* ── Top: editorial testimonials ── */}
       <div className="conv__testimonials">
         <div className="section-container">
           <div className="conv__header reveal">
-            <span className="section-eyebrow">Real Results</span>
-            <h2 className="conv__title">What Our Members Say</h2>
+            <div>
+              <span className="section-eyebrow">Real Results</span>
+              <h2 className="conv__title">What Our<br />Members Say</h2>
+            </div>
+            <span className="conv__header-right">500+ members · 4+ years</span>
           </div>
-          <div className="conv__cards">
+
+          <div className="conv__quotes">
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={t.name}
-                className="conv__card reveal"
+                className="conv__quote reveal"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <Stars />
-                <p className="conv__card-text">"{t.text}"</p>
-                <div className="conv__card-footer">
-                  <div className="conv__avatar">{t.name.charAt(0)}</div>
+                <div>
+                  <span className="conv__quote-mark" aria-hidden="true">"</span>
+                  <Stars />
+                  <p className="conv__quote-text">{t.text}</p>
+                </div>
+                <div className="conv__quote-footer">
+                  <div className="conv__avatar" aria-hidden="true">{t.name.charAt(0)}</div>
                   <div>
-                    <div className="conv__card-name">{t.name}</div>
-                    <div className="conv__card-result">{t.result}</div>
+                    <div className="conv__quote-name">{t.name}</div>
+                    <div className="conv__quote-result">{t.result}</div>
                   </div>
                 </div>
               </div>
@@ -86,7 +92,7 @@ const Conversion = () => {
 
         <div className="conv__cta-content reveal">
           <h2 className="conv__cta-heading">
-            Your Stronger Self<br />
+            Your Stronger Self
             <span className="conv__cta-accent">Starts Here.</span>
           </h2>
           <p className="conv__cta-sub">
@@ -100,7 +106,7 @@ const Conversion = () => {
               className="conv__btn-primary"
               id="conv-cta-book-btn"
             >
-              <MessageCircle size={17} />
+              <MessageCircle size={16} />
               Book a Free Trial
             </a>
             <a

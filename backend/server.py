@@ -83,6 +83,16 @@ class HeroSettings(BaseModel):
     transitionDuration: int = Field(default=1000)
     autoplay: bool = Field(default=True)
 
+class SiteSettings(BaseModel):
+    phoneMain: str = Field(default="9028468563")
+    phoneAlt: str = Field(default="8668891406")
+    whatsappNumber: str = Field(default="919028468563")
+    instagramUrl: str = Field(default="https://www.instagram.com/ttz_fitness_24/")
+    locationName: str = Field(default="Satara Parisar, Chhatrapati Sambhajinagar")
+    locationMapUrl: str = Field(default="https://maps.app.goo.gl/DY5aPzJaSD6x7QKH9")
+    timingMorning: str = Field(default="Morning: 5:00 – 10:00 AM")
+    timingEvening: str = Field(default="Evening: 5:00 – 10:00 PM")
+
 
 # ══════════════════════════════════════════════════════════
 #  AUTH HELPERS
@@ -285,6 +295,28 @@ async def update_hero_settings(
     save_db(db_data)
     return settings
 
+@api_router.get('/settings/site', response_model=SiteSettings)
+async def get_site_settings():
+    """Get global site settings."""
+    db_data = load_db()
+    doc = db_data.get('settings', {}).get('site_details')
+    if not doc:
+        return SiteSettings()
+    return SiteSettings(**doc)
+
+@api_router.put('/settings/site', response_model=SiteSettings)
+async def update_site_settings(
+    settings: SiteSettings,
+    _admin: str = Depends(get_current_admin)
+):
+    """Update global site settings."""
+    db_data = load_db()
+    if 'settings' not in db_data:
+        db_data['settings'] = {}
+    db_data['settings']['site_details'] = settings.model_dump()
+    save_db(db_data)
+    return settings
+
 
 # ══════════════════════════════════════════════════════════
 #  APP SETUP
@@ -292,13 +324,29 @@ async def update_hero_settings(
 
 app.include_router(api_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origin_regex=".*",
-    allow_methods=['*'],
-    allow_headers=['*'],
-)
+# ── CORS ──────────────────────────────────────────────────────────
+# In production set CORS_ORIGINS to a comma-separated list of allowed
+# origins, e.g. "https://ttz-fitness.vercel.app,https://ttzfitness.com"
+# Leave as "*" for local development (the default in backend/.env).
+_raw_origins = os.environ.get('CORS_ORIGINS', '*')
+_origins_list = [o.strip() for o in _raw_origins.split(',') if o.strip()]
+
+if _origins_list == ['*']:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=False,   # credentials incompatible with wildcard
+        allow_methods=['*'],
+        allow_headers=['*'],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_origins_list,
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*'],
+    )
 
 logging.basicConfig(
     level=logging.INFO,

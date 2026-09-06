@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Menu, X } from 'lucide-react';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Header.css';
 
 /**
@@ -19,6 +20,7 @@ import './Header.css';
  * All WhatsApp / phone links preserved exactly.
  */
 const Header = () => {
+  const settings = useContext(SiteSettingsContext);
   const [isScrolled, setIsScrolled]           = useState(false);
   const [utilityVisible, setUtilityVisible]   = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -68,12 +70,12 @@ const Header = () => {
             Chhatrapati Sambhajinagar&nbsp;&nbsp;·&nbsp;&nbsp;Est. 2020
           </span>
           <div className="ttz-utility__right">
-            <a href="tel:9028468563" className="ttz-utility__link">
-              9028468563
+            <a href={`tel:${settings?.phoneMain}`} className="ttz-utility__link">
+              {settings?.phoneMain}
             </a>
             <span className="ttz-utility__sep" aria-hidden="true">·</span>
             <a
-              href="https://www.instagram.com/ttz_fitness_24/"
+              href={settings?.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="ttz-utility__link"
@@ -131,7 +133,7 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <a
-            href="https://wa.link/z36oiv"
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to join now!`}
             target="_blank"
             rel="noopener noreferrer"
             className="ttz-header__cta"
@@ -194,7 +196,7 @@ const Header = () => {
 
           <div className="ttz-mobile-menu__footer">
             <a
-              href="https://wa.link/z36oiv"
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to join now!`}
               target="_blank"
               rel="noopener noreferrer"
               className="ttz-mobile-menu__cta"
@@ -202,8 +204,8 @@ const Header = () => {
               Join Now — Free Trial
             </a>
             <div className="ttz-mobile-menu__phones">
-              <a href="tel:9028468563">9028468563</a>
-              <a href="tel:8668891406">8668891406</a>
+              <a href={`tel:${settings?.phoneMain}`}>{settings?.phoneMain}</a>
+              <a href={`tel:${settings?.phoneAlt}`}>{settings?.phoneAlt}</a>
             </div>
           </div>
 

@@ -1,30 +1,20 @@
 /* ============================================================
-   TTZ HERO — Full-viewport crossfade slideshow
-   Header clearance uses CSS custom properties defined in
-   index.css so the hero always accounts for the correct
-   header height at every breakpoint.
+   TTZ HERO — Cinematic full-viewport experience
    ============================================================ */
 
 /* ── Section container ── */
 .hero {
   position: relative;
   width: 100%;
-  height: 90vh;
-  min-height: 580px;
-  max-height: 1000px;
+  height: 100vh;
+  min-height: 620px;
+  max-height: 1080px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   overflow: hidden;
-
-  /*
-   * Push the visual center of flex content below the header.
-   * The background slideshow (position: absolute; inset: 0) still
-   * covers the full viewport including behind the header — only the
-   * text/CTA content is offset downward so it clears the nav.
-   */
-  padding-top: var(--header-total-h);
+  padding-bottom: 120px;
 }
 
 /* ── Slideshow container ── */
@@ -38,7 +28,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.4s ease-in-out;
+  transition: opacity 1.6s ease-in-out;
   will-change: opacity;
 }
 
@@ -54,25 +44,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  animation: heroKenBurns 14s ease-in-out infinite alternate;
+  object-position: center 30%;
+  animation: heroKenBurns 16s ease-in-out infinite alternate;
 }
 
 @keyframes heroKenBurns {
-  from { transform: scale(1.04) translate(0, 0); }
-  to   { transform: scale(1.00) translate(-0.5%, -0.5%); }
+  from { transform: scale(1.06) translate(0, 0); }
+  to   { transform: scale(1.00) translate(-0.8%, -0.4%); }
 }
 
-/* Multi-layer overlays */
+/* Multi-layer overlays — cinematic, directional */
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.80) 0%,
-    rgba(0, 0, 0, 0.48) 50%,
-    rgba(0, 0, 0, 0.65) 100%
-  );
+  background:
+    linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
   z-index: 1;
 }
 
@@ -81,26 +72,36 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 45%;
-  background: linear-gradient(to top, rgba(13, 13, 13, 0.95), transparent);
+  height: 50%;
+  background: linear-gradient(to top, rgba(13, 13, 13, 1.0) 0%, rgba(13, 13, 13, 0.0) 100%);
   z-index: 2;
 }
 
-/* ── Content block (centered in visible area below header) ── */
+/* Subtle top vignette */
+.hero__overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, rgba(8, 8, 8, 0.6) 0%, transparent 100%);
+  z-index: 2;
+}
+
+/* ── Content block — left-aligned, strong hierarchy ── */
 .hero__content {
   position: relative;
   z-index: 10;
-  text-align: center;
-  padding: 0 var(--space-xl);
-  max-width: 960px;
+  padding: 0 var(--space-xl) 0 var(--space-2xl);
+  max-width: 900px;
   width: 100%;
-  animation: heroFadeIn 1.2s var(--ease-luxury) 0.2s both;
+  animation: heroFadeIn 1.4s var(--ease-luxury) 0.2s both;
 }
 
 @keyframes heroFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
@@ -108,130 +109,195 @@
   }
 }
 
+/* Eyebrow above heading */
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hero__eyebrow-line {
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.hero__eyebrow-text {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
 /* Main title */
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 13vw, 11rem);
-  letter-spacing: 0.04em;
-  line-height: 0.92;
+  font-size: clamp(4rem, 10vw, 9.5rem);
+  letter-spacing: 0.015em;
+  line-height: 0.90;
   color: var(--text-primary);
-  margin-bottom: var(--space-lg);
-  text-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
+  margin-bottom: 28px;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
 }
 
 .hero__title-accent {
   color: var(--gold);
+  display: block;
 }
 
 /* Tagline */
 .hero__tagline {
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.50);
-  margin-bottom: var(--space-xl);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(245, 240, 232, 0.60);
+  margin-bottom: 40px;
+  max-width: 420px;
+  letter-spacing: 0.01em;
 }
 
 /* CTA buttons */
 .hero__actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-.hero__btn-primary {
-  font-size: 0.875rem;
-  padding: 16px 40px;
-}
-
-.hero__btn-secondary {
-  font-size: 0.875rem;
-  padding: 15px 36px;
-}
-
-/* ── Slide counter (bottom-right) ── */
-.hero__counter {
+/* ── Vertical stat strip (right side) ── */
+.hero__stat-strip {
   position: absolute;
-  bottom: 90px;
-  right: var(--space-xl);
+  right: var(--space-2xl);
+  bottom: 100px;
   z-index: 10;
   display: flex;
-  align-items: baseline;
-  gap: 6px;
+  flex-direction: column;
+  gap: 32px;
+  animation: heroFadeIn 1.4s var(--ease-luxury) 0.6s both;
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.hero__stat::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+.hero__stat:last-child::after {
+  display: none;
+}
+
+.hero__stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.hero__stat-label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ── Slide counter (bottom-left, above content) ── */
+.hero__counter {
+  position: absolute;
+  bottom: 40px;
+  left: var(--space-2xl);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   user-select: none;
 }
 
 .hero__counter-current {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   letter-spacing: 0.04em;
   color: var(--gold);
   line-height: 1;
 }
 
 .hero__counter-sep {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.20);
   font-weight: 300;
 }
 
 .hero__counter-total {
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.30);
 }
 
 /* ── Slideshow dots (bottom-center) ── */
 .hero__dots {
   position: absolute;
-  bottom: 90px;
+  bottom: 48px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .hero__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.25);
+  width: 5px;
+  height: 5px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.20);
   border: none;
   cursor: pointer;
   padding: 0;
   transition:
-    background var(--duration-mid) var(--ease-luxury),
-    width     var(--duration-mid) var(--ease-luxury);
+    background  var(--duration-mid) var(--ease-luxury),
+    width       var(--duration-mid) var(--ease-luxury);
 }
 
 .hero__dot--active {
-  width: 28px;
+  width: 24px;
   background: var(--gold);
 }
 
 /* ── Scroll indicator ── */
 .hero__scroll-indicator {
   position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 36px;
+  right: var(--space-2xl);
   z-index: 10;
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.35);
   cursor: pointer;
   animation: heroScrollBounce 2.8s ease-in-out infinite;
   transition:
@@ -245,52 +311,74 @@
 }
 
 @keyframes heroScrollBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(7px); }
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-
-/* On mobile, --header-total-h drops to 64px (utility bar hidden)
-   We reset this via the CSS variable declared in index.css media query */
 @media (max-width: 900px) {
   .hero {
-    /* Override to mobile header height (utility bar is gone) */
     padding-top: 64px;
+    padding-bottom: 100px;
+    align-items: flex-start;
+    justify-content: flex-end;
   }
 
   .hero__content {
     padding: 0 var(--space-md);
   }
 
+  .hero__stat-strip {
+    display: none;
+  }
+
   .hero__counter {
+    left: var(--space-md);
+    bottom: 36px;
+  }
+
+  .hero__scroll-indicator {
     right: var(--space-md);
-    bottom: 96px;
+  }
+
+  /* On mobile, slightly stronger overlay */
+  .hero__overlay {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
   }
 }
 
 @media (max-width: 768px) {
   .hero__actions {
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--space-sm);
-    align-items: center;
   }
 
-  .hero__btn-primary,
-  .hero__btn-secondary {
-    width: 100%;
-    max-width: 300px;
+  .hero__title {
+    font-size: clamp(3.5rem, 14vw, 6rem);
   }
 }
 
 @media (max-width: 480px) {
   .hero__title {
-    font-size: clamp(3.5rem, 16vw, 5rem);
+    font-size: clamp(3rem, 16vw, 4.5rem);
+  }
+
+  .hero__tagline {
+    font-size: 0.875rem;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .hero__counter {
-    display: none; /* too crowded on very small screens */
+    display: none;
   }
 }

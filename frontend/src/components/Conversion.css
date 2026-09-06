@@ -1,114 +1,146 @@
 /* ================================================================
-   CONVERSION — Testimonials + FinalCTA merged
+   CONVERSION — Testimonials in editorial quote format
+   + Cinematic full-bleed CTA section
    ================================================================ */
 
-/* ── Top: testimonials area ── */
+/* ── Testimonials area ── */
 .conv__testimonials {
-  background: var(--bg-surface);
-  padding: 64px 0 56px;
+  background: var(--bg-base);
+  padding: 96px 0 80px;
+  border-top: 1px solid var(--border-subtle);
 }
 
+/* Section header */
 .conv__header {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: 32px;
-  margin-bottom: 36px;
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-subtle);
   flex-wrap: wrap;
+}
+
+.conv__header-right {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  font-style: italic;
+  padding-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .conv__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  letter-spacing: 0.04em;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  letter-spacing: 0.03em;
   color: var(--text-primary);
-  line-height: 1;
+  line-height: 0.96;
+  margin-top: 14px;
 }
 
-/* 3-column compact cards */
-.conv__cards {
+/* ── Editorial testimonial row ── */
+/* Different from 3-card: horizontal row with large quote text */
+.conv__quotes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
+  gap: 0;
 }
 
-.conv__card {
-  background: var(--bg-base);
-  border: 1px solid var(--border-subtle);
-  border-radius: 2px;
-  padding: 24px;
+.conv__quote {
+  padding: 32px 40px 32px 0;
+  border-right: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  transition:
-    border-color var(--duration-mid) var(--ease-luxury),
-    transform    var(--duration-mid) var(--ease-luxury);
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
 }
 
-.conv__card:hover {
-  border-color: var(--border-gold);
-  transform: translateY(-2px);
+.conv__quote:last-child {
+  border-right: none;
+  padding-right: 0;
+  padding-left: 40px;
+}
+
+.conv__quote:nth-child(2) {
+  padding: 32px 40px;
+}
+
+/* Large gold quotation mark */
+.conv__quote-mark {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--gold);
+  line-height: 0.6;
+  opacity: 0.4;
+  user-select: none;
+  letter-spacing: 0;
 }
 
 .conv__stars {
   display: flex;
   gap: 2px;
+  margin-bottom: 4px;
 }
 
-.conv__card-text {
-  font-size: 0.845rem;
-  line-height: 1.65;
+.conv__quote-text {
+  font-size: 0.9375rem;
+  line-height: 1.72;
   color: var(--text-secondary);
+  font-style: italic;
   flex: 1;
 }
 
-.conv__card-footer {
+.conv__quote-footer {
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding-top: 14px;
+  gap: 13px;
+  padding-top: 20px;
   border-top: 1px solid var(--border-subtle);
 }
 
 .conv__avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 0;
   background: var(--bg-elevated);
   border: 1px solid var(--border-gold);
   color: var(--gold);
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.conv__card-name {
-  font-size: 0.8rem;
+.conv__quote-name {
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 1px;
+  margin-bottom: 2px;
+  letter-spacing: 0.01em;
 }
 
-.conv__card-result {
-  font-size: 0.63rem;
+.conv__quote-result {
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
-/* ── Bottom: Cinematic CTA ── */
+/* ── Cinematic CTA section ── */
 .conv__cta-section {
   position: relative;
   overflow: hidden;
-  min-height: 420px;
+  min-height: 480px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px var(--space-xl);
+  justify-content: flex-start;
+  padding: 96px var(--space-2xl);
 }
 
 .conv__cta-bg {
@@ -121,55 +153,58 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 25%;
 }
 
+/* Directional overlay — left heavy */
 .conv__cta-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to bottom,
-    rgba(8,8,8,0.6) 0%,
-    rgba(8,8,8,0.82) 100%
+    to right,
+    rgba(8, 8, 8, 0.92) 0%,
+    rgba(8, 8, 8, 0.70) 40%,
+    rgba(8, 8, 8, 0.25) 100%
   );
 }
 
 .conv__cta-content {
   position: relative;
   z-index: 10;
-  max-width: 700px;
+  max-width: 680px;
 }
 
 .conv__cta-heading {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 6.5rem);
-  letter-spacing: 0.04em;
-  line-height: 0.96;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  letter-spacing: 0.02em;
+  line-height: 0.92;
   color: var(--text-primary);
-  margin-bottom: 14px;
-  text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+  margin-bottom: 20px;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
 }
 
 .conv__cta-accent {
   color: var(--gold);
+  display: block;
 }
 
 .conv__cta-sub {
-  font-family: var(--font-serif);
   font-size: 1rem;
-  font-style: italic;
-  color: rgba(245,240,232,0.55);
-  margin-bottom: 36px;
+  color: rgba(245, 240, 232, 0.55);
+  margin-bottom: 44px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
 }
 
 .conv__cta-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
+  gap: 14px;
   flex-wrap: wrap;
 }
 
+/* CTA buttons */
 .conv__btn-primary {
   display: inline-flex;
   align-items: center;
@@ -178,16 +213,16 @@
   color: #000;
   text-decoration: none;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 14px 36px;
-  border-radius: 2px;
+  padding: 15px 36px;
+  border-radius: 0;
   transition:
     background var(--duration-fast) var(--ease-snap),
     transform  var(--duration-fast) var(--ease-snap);
-  box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+  box-shadow: 0 4px 24px rgba(201, 168, 76, 0.25);
 }
 
 .conv__btn-primary:hover {
@@ -199,16 +234,16 @@
   display: inline-flex;
   align-items: center;
   background: transparent;
-  color: rgba(245,240,232,0.7);
+  color: rgba(245, 240, 232, 0.70);
   text-decoration: none;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 13px 28px;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 2px;
+  padding: 14px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 0;
   transition:
     color        var(--duration-fast) var(--ease-snap),
     border-color var(--duration-fast) var(--ease-snap),
@@ -217,35 +252,65 @@
 
 .conv__btn-ghost:hover {
   color: var(--text-primary);
-  border-color: rgba(255,255,255,0.45);
+  border-color: rgba(255, 255, 255, 0.50);
   transform: translateY(-2px);
 }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .conv__testimonials {
-    padding: 48px 0 40px;
+@media (max-width: 1100px) {
+  .conv__quote:nth-child(2) {
+    padding: 32px 32px;
   }
 
-  .conv__cards {
+  .conv__quote {
+    padding: 32px 32px 32px 0;
+  }
+
+  .conv__quote:last-child {
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .conv__testimonials {
+    padding: 72px 0 60px;
+  }
+
+  .conv__quotes {
     grid-template-columns: 1fr;
-    gap: 3px;
+    gap: 0;
+  }
+
+  .conv__quote {
+    padding: 28px 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .conv__quote:last-child {
+    padding: 28px 0 0;
+    border-bottom: none;
+  }
+
+  .conv__quote:nth-child(2) {
+    padding: 28px 0;
   }
 
   .conv__cta-section {
-    padding: 64px var(--space-md);
-    min-height: 360px;
+    padding: 72px var(--space-md);
+    justify-content: flex-start;
+    min-height: 420px;
   }
 
   .conv__cta-actions {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .conv__btn-primary,
   .conv__btn-ghost {
     width: 100%;
-    max-width: 280px;
+    max-width: 300px;
     justify-content: center;
   }
 }
@@ -253,6 +318,7 @@
 @media (max-width: 600px) {
   .conv__header {
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 10px;
   }
 }

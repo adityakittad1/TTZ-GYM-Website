@@ -4,7 +4,7 @@ import useScrollReveal from '../hooks/useScrollReveal';
 import './Membership.css';
 
 /**
- * Membership — Sharp-edged pricing cards.
+ * Membership — Horizontal table-style pricing.
  * All pricing data and phone/WhatsApp links preserved exactly.
  */
 const PLANS = [
@@ -28,20 +28,19 @@ const Membership = () => {
     <section id="membership" className="membership" ref={ref}>
       <div className="membership__container">
 
-        {/* Editorial header */}
+        {/* Header — large display title + sub-copy */}
         <div className="membership__header">
           <div className="membership__header-left reveal-left">
             <span className="section-eyebrow">Invest in Yourself</span>
-            <h2 className="membership__title">Membership</h2>
+            <h2 className="membership__title">Member&shy;ship</h2>
           </div>
           <div className="membership__header-right reveal-right">
             <p className="membership__lead">
               Choose the plan that fits your journey. Every membership includes
               full access to all facilities, group classes, and nutrition guidance.
             </p>
-            {/* Timings inline with header */}
             <div className="membership__timings">
-              <Clock size={16} className="membership__clock-icon" />
+              <Clock size={14} className="membership__clock-icon" />
               <span>Morning 5:00 – 10:00 AM</span>
               <span className="membership__timing-sep">·</span>
               <span>Evening 5:00 – 10:00 PM</span>
@@ -49,13 +48,13 @@ const Membership = () => {
           </div>
         </div>
 
-        {/* Plans grid */}
+        {/* Plans — horizontal table */}
         <div className="membership__grid">
           {PLANS.map((plan, i) => (
             <div
               key={plan.duration}
               className={`membership__card reveal${plan.popular ? ' membership__card--popular' : ''}`}
-              style={{ transitionDelay: `${i * 80}ms` }}
+              style={{ transitionDelay: `${i * 70}ms` }}
             >
               {plan.popular && (
                 <div className="membership__badge">Best Value</div>
@@ -72,7 +71,7 @@ const Membership = () => {
               <ul className="membership__features">
                 {FEATURES.map((f) => (
                   <li key={f} className="membership__feature">
-                    <Check size={14} className="membership__check" />
+                    <Check size={13} className="membership__check" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -90,21 +89,23 @@ const Membership = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA — inline */}
         <div className="membership__cta reveal">
-          <h3 className="membership__cta-heading">
-            Crush Your 2026 Goals With TTZ Fitness
-          </h3>
-          <p className="membership__cta-sub">
-            Call us today and we'll find the perfect plan for you.
-          </p>
+          <div className="membership__cta-left">
+            <h3 className="membership__cta-heading">
+              Crush Your 2026 Goals With TTZ Fitness
+            </h3>
+            <p className="membership__cta-sub">
+              Call us today and we'll find the perfect plan for you.
+            </p>
+          </div>
           <div className="membership__cta-phones">
             <a href="tel:9028468563" className="membership__phone-link">
-              <Phone size={16} />
+              <Phone size={15} />
               9028468563
             </a>
             <a href="tel:8668891406" className="membership__phone-link">
-              <Phone size={16} />
+              <Phone size={15} />
               8668891406
             </a>
           </div>

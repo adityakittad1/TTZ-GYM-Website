@@ -1,12 +1,12 @@
 /* ================================================================
-   CONTACT FOOTER — Contact form + Footer merged
+   CONTACT FOOTER — Premium contact + minimal footer
    ================================================================ */
 
 /* ── Upper: contact area ── */
 .cf__contact {
   background: var(--bg-void);
   border-top: 1px solid var(--border-subtle);
-  padding: 64px 0;
+  padding: 96px 0 80px;
 }
 
 .cf__contact-inner {
@@ -15,42 +15,42 @@
   padding: 0 var(--space-xl);
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 64px;
+  gap: 80px;
   align-items: start;
 }
 
 .cf__contact-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  letter-spacing: 0.04em;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  letter-spacing: 0.03em;
   color: var(--text-primary);
-  margin: 10px 0 28px;
-  line-height: 1.05;
+  margin: 14px 0 32px;
+  line-height: 1.02;
 }
 
 /* ── Form ── */
 .cf__form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .cf__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .cf__field {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .cf__label {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -60,11 +60,11 @@
   width: 100%;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 2px;
+  border-radius: 0;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.875rem;
-  padding: 12px 14px;
+  padding: 13px 16px;
   outline: none;
   transition:
     border-color var(--duration-fast) var(--ease-snap),
@@ -75,17 +75,18 @@
 .cf__input:focus,
 .cf__textarea:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.10);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08);
 }
 
 .cf__input::placeholder,
 .cf__textarea::placeholder {
   color: var(--text-muted);
+  opacity: 0.7;
 }
 
 .cf__textarea {
   resize: vertical;
-  min-height: 90px;
+  min-height: 100px;
 }
 
 .cf__submit {
@@ -95,13 +96,13 @@
   background: var(--gold);
   color: #000;
   border: none;
-  border-radius: 2px;
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 13px 28px;
+  padding: 14px 30px;
   cursor: pointer;
   align-self: flex-start;
   transition:
@@ -119,14 +120,14 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-top: 52px; /* align with form (below title) */
+  padding-top: 60px;
 }
 
 .cf__info-item {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 16px 0;
+  gap: 16px;
+  padding: 18px 0;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -141,20 +142,20 @@
 }
 
 .cf__info-label {
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .cf__info-link {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   text-decoration: none;
-  line-height: 1.5;
+  line-height: 1.6;
   transition: color var(--duration-fast) var(--ease-snap);
 }
 
@@ -164,9 +165,9 @@
 
 .cf__info-text {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* ── Lower: footer bar ── */
@@ -189,30 +190,30 @@
 .cf__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   flex-shrink: 0;
 }
 
 .cf__brand-logo {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid var(--border-gold);
+  border: 1px solid var(--border-gold);
 }
 
 .cf__brand-name {
   font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
   color: var(--gold);
   line-height: 1;
 }
 
 .cf__brand-tag {
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -231,13 +232,13 @@
   background: none;
   border: none;
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--text-muted);
   cursor: pointer;
   padding: 6px 10px;
-  border-radius: 2px;
+  border-radius: 0;
   transition: color var(--duration-fast) var(--ease-snap);
 }
 
@@ -256,14 +257,14 @@
 
 .cf__socials {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .cf__social {
   width: 32px;
   height: 32px;
-  border-radius: 2px;
-  background: var(--bg-surface);
+  border-radius: 0;
+  background: transparent;
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   display: flex;
@@ -281,7 +282,7 @@
 }
 
 .cf__copy {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: var(--text-muted);
   letter-spacing: 0.04em;
   display: flex;
@@ -303,18 +304,18 @@
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .cf__contact-inner {
-    gap: 48px;
+    gap: 56px;
   }
 }
 
 @media (max-width: 900px) {
   .cf__contact {
-    padding: 48px 0;
+    padding: 72px 0 60px;
   }
 
   .cf__contact-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 48px;
     padding: 0 var(--space-md);
   }
 

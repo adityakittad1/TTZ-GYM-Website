@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Phone, MapPin, Instagram, MessageCircle, Clock, Heart } from 'lucide-react';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './ContactFooter.css';
 
 /**
@@ -8,11 +9,12 @@ import './ContactFooter.css';
  * All original links and form functionality preserved exactly.
  */
 const ContactFooter = () => {
+  const settings = useContext(SiteSettingsContext);
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.open('https://wa.link/z36oiv', '_blank');
+    window.open(`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! My name is ${form.name}. ${form.message}`, '_blank');
   };
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -81,8 +83,8 @@ const ContactFooter = () => {
               <Phone size={16} className="cf__info-icon" />
               <div>
                 <div className="cf__info-label">Call Us</div>
-                <a href="tel:9028468563" className="cf__info-link">9028468563</a>
-                <a href="tel:8668891406" className="cf__info-link">8668891406</a>
+                <a href={`tel:${settings?.phoneMain}`} className="cf__info-link">{settings?.phoneMain}</a>
+                <a href={`tel:${settings?.phoneAlt}`} className="cf__info-link">{settings?.phoneAlt}</a>
               </div>
             </div>
 
@@ -91,7 +93,7 @@ const ContactFooter = () => {
               <div>
                 <div className="cf__info-label">WhatsApp</div>
                 <a
-                  href="https://wa.me/919028468563"
+                  href={`https://wa.me/${settings?.whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cf__info-link"
@@ -105,8 +107,8 @@ const ContactFooter = () => {
               <Clock size={16} className="cf__info-icon" />
               <div>
                 <div className="cf__info-label">Timings</div>
-                <span className="cf__info-text">Morning: 5:00 – 10:00 AM</span>
-                <span className="cf__info-text">Evening: 5:00 – 10:00 PM</span>
+                <span className="cf__info-text">{settings?.timingMorning}</span>
+                <span className="cf__info-text">{settings?.timingEvening}</span>
               </div>
             </div>
 
@@ -115,12 +117,12 @@ const ContactFooter = () => {
               <div>
                 <div className="cf__info-label">Location</div>
                 <a
-                  href="https://maps.app.goo.gl/DY5aPzJaSD6x7QKH9"
+                  href={settings?.locationMapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cf__info-link"
                 >
-                  Satara Parisar, Chhatrapati Sambhajinagar
+                  {settings?.locationName}
                 </a>
               </div>
             </div>
@@ -130,7 +132,7 @@ const ContactFooter = () => {
               <div>
                 <div className="cf__info-label">Instagram</div>
                 <a
-                  href="https://www.instagram.com/ttz_fitness_24/"
+                  href={settings?.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cf__info-link"
@@ -173,13 +175,13 @@ const ContactFooter = () => {
           {/* Social + copyright */}
           <div className="cf__right">
             <div className="cf__socials">
-              <a href="https://www.instagram.com/ttz_fitness_24/" target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="Instagram">
+              <a href={settings?.instagramUrl} target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="Instagram">
                 <Instagram size={16} />
               </a>
-              <a href="https://wa.me/919028468563" target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="WhatsApp">
+              <a href={`https://wa.me/${settings?.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="WhatsApp">
                 <MessageCircle size={16} />
               </a>
-              <a href="tel:9028468563" className="cf__social" aria-label="Phone">
+              <a href={`tel:${settings?.phoneMain}`} className="cf__social" aria-label="Phone">
                 <Phone size={16} />
               </a>
             </div>
