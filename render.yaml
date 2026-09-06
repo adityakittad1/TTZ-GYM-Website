@@ -45,7 +45,6 @@ services:
   - type: web
     name: ttz-frontend
     runtime: static
-    region: singapore
     plan: free
     rootDir: frontend
 
