@@ -89,7 +89,7 @@ backend/data.json         # Local JSON database (ephemeral, not source code)
 
 # Frontend secrets & production env
 frontend/.env             # Local dev — backend URL set via platform dashboard
-frontend/.env.production  # Contains real backend URL — set via platform dashboard
+# frontend/.env.production is safe to commit (only contains public backend URL, no secrets)
 
 # React production build (built by CI/CD, not committed)
 frontend/build/
