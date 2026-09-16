@@ -29,7 +29,7 @@ const AboutStats = () => {
         {/* Photo — left, full-bleed, clip-path reveal */}
         <div className="about-stats__photo-col" data-reveal-clip>
           <img
-            src="/images/gym1.png"
+            src="/images/gym1.webp"
             alt="TTZ Fitness training floor"
             className="about-stats__photo"
             loading="lazy"

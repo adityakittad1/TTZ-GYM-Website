@@ -26,11 +26,11 @@ gsap.registerPlugin(ScrollTrigger);
  */
 
 const DEFAULT_HERO_IMAGES = [
-  '/images/gym2.png',
-  '/images/gym1.png',
-  '/images/gym3.png',
-  '/images/gym4.png',
-  '/images/gym5.png',
+  '/images/gym2.webp',
+  '/images/gym1.webp',
+  '/images/gym3.webp',
+  '/images/gym4.webp',
+  '/images/gym5.webp',
 ];
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || `http://${window.location.hostname}:8001`;
 

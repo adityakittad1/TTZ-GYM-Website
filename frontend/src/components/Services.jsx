@@ -15,12 +15,12 @@ import './Services.css';
  * - Also row: fades up
  */
 const PRIMARY = [
-  { title: 'Weight Training',    img: '/images/gym2.png', desc: 'Build strength with premium equipment and expert programming.' },
-  { title: 'Personal Training',  img: '/images/gym4.png', desc: 'One-on-one coaching tailored precisely to your goals.' },
-  { title: 'Nutrition Plans',    img: '/images/gym3.png', desc: 'Certified nutrition coaching that drives real results.' },
-  { title: 'Cardio',             img: '/images/gym5.png', desc: 'High-intensity cardio for peak endurance and fat loss.' },
-  { title: 'Fat Loss Programs',  img: '/images/gym1.png', desc: 'Targeted programs combining smart training and diet.' },
-  { title: 'Muscle Building',    img: '/images/gym2.png', desc: 'Structured hypertrophy protocols for lean muscle gain.' },
+  { title: 'Weight Training',    img: '/images/gym2.webp', desc: 'Build strength with premium equipment and expert programming.' },
+  { title: 'Personal Training',  img: '/images/gym4.webp', desc: 'One-on-one coaching tailored precisely to your goals.' },
+  { title: 'Nutrition Plans',    img: '/images/gym3.webp', desc: 'Certified nutrition coaching that drives real results.' },
+  { title: 'Cardio',             img: '/images/gym5.webp', desc: 'High-intensity cardio for peak endurance and fat loss.' },
+  { title: 'Fat Loss Programs',  img: '/images/gym1.webp', desc: 'Targeted programs combining smart training and diet.' },
+  { title: 'Muscle Building',    img: '/images/gym2.webp', desc: 'Structured hypertrophy protocols for lean muscle gain.' },
 ];
 
 const ALSO = ['Yoga', 'Zumba', 'Aerobics', 'Meditation'];

@@ -116,7 +116,7 @@ const Conversion = () => {
       <div className="conv__cta-section">
         <div className="conv__cta-bg" aria-hidden="true" ref={ctaBgRef}>
           <img
-            src="/images/gym5.png"
+            src="/images/gym5.webp"
             alt=""
             className="conv__cta-img"
             loading="lazy"

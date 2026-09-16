@@ -16,7 +16,7 @@ const FinalCTA = () => {
       {/* Background */}
       <div className="final-cta__bg" aria-hidden="true">
         <img
-          src="/images/gym5.png"
+          src="/images/gym5.webp"
           alt=""
           className="final-cta__bg-img"
           loading="lazy"

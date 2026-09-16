@@ -44,7 +44,7 @@ const About = () => {
         <div className="about__photo-col reveal-left">
           <div className="about__photo-wrap">
             <img
-              src="/images/gym1.png"
+              src="/images/gym1.webp"
               alt="TTZ Fitness training floor"
               className="about__photo"
               loading="lazy"

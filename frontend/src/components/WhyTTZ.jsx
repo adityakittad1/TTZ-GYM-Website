@@ -44,7 +44,7 @@ const WhyTTZ = () => {
       {/* Background photo with overlay */}
       <div className="why-ttz__bg" aria-hidden="true">
         <img
-          src="/images/gym3.png"
+          src="/images/gym3.webp"
           alt=""
           className="why-ttz__bg-img"
           loading="lazy"

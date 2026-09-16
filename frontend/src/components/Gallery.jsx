@@ -15,11 +15,11 @@ gsap.registerPlugin(ScrollTrigger);
  * - Each mosaic cell: directional clip-path wipe (unique per cell)
  */
 const IMAGES = [
-  { src: '/images/gym2.png', alt: 'TTZ Fitness — Main training floor with premium equipment' },
-  { src: '/images/gym1.png', alt: 'TTZ Fitness — Weight room' },
-  { src: '/images/gym3.png', alt: 'TTZ Fitness — Cable machines and functional training area' },
-  { src: '/images/gym4.png', alt: 'TTZ Fitness — Cardio and strength equipment' },
-  { src: '/images/gym5.png', alt: 'TTZ Fitness — Full facility overview' },
+  { src: '/images/gym2.webp', alt: 'TTZ Fitness — Main training floor with premium equipment' },
+  { src: '/images/gym1.webp', alt: 'TTZ Fitness — Weight room' },
+  { src: '/images/gym3.webp', alt: 'TTZ Fitness — Cable machines and functional training area' },
+  { src: '/images/gym4.webp', alt: 'TTZ Fitness — Cardio and strength equipment' },
+  { src: '/images/gym5.webp', alt: 'TTZ Fitness — Full facility overview' },
 ];
 
 // Clip-path reveal directions per cell

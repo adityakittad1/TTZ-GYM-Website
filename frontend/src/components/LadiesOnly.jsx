@@ -63,7 +63,7 @@ const LadiesOnly = () => {
         
         <div className="ladies-only__image-wrap" data-reveal-clip="right">
           <img 
-            src="/images/gym2.png" 
+            src="/images/gym2.webp" 
             alt="Ladies Only Fitness" 
             className="ladies-only__image" 
             loading="lazy"
