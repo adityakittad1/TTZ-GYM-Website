@@ -1,0 +1,168 @@
+/* ================================================================
+   LADIES-ONLY FITNESS SECTION
+   ================================================================ */
+
+.ladies-only {
+  background: var(--bg-void);
+  padding: 100px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.ladies-only__inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ── Content ── */
+.ladies-only__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.ladies-only__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.ladies-only__eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.ladies-only__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+
+.ladies-only__accent {
+  color: var(--gold);
+  display: block;
+}
+
+.ladies-only__desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+/* ── Features List ── */
+.ladies-only__features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+  list-style: none;
+  padding: 0;
+}
+
+.ladies-only__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.ladies-only__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Actions ── */
+.ladies-only__btn {
+  width: auto;
+  align-self: flex-start;
+}
+
+/* ── Image ── */
+.ladies-only__image-wrap {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+  will-change: clip-path; /* For GSAP wipe */
+}
+
+.ladies-only__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ladies-only__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    rgba(8, 8, 8, 0.2) 0%,
+    rgba(8, 8, 8, 0.8) 100%
+  );
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .ladies-only__inner {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ladies-only__inner {
+    grid-template-columns: 1fr;
+  }
+  
+  .ladies-only__image-wrap {
+    height: 400px;
+    order: -1;
+  }
+  
+  .ladies-only__features {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .ladies-only__title {
+    font-size: 2.8rem;
+  }
+  
+  .ladies-only__image-wrap {
+    height: 300px;
+  }
+  
+  .ladies-only__btn {
+    width: 100%;
+  }
+}

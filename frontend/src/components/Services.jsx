@@ -1,5 +1,6 @@
-import React from 'react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import React, { useContext } from 'react';
+import useGSAPReveal from '../hooks/useGSAPReveal';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Services.css';
 
 /**
@@ -7,6 +8,11 @@ import './Services.css';
  * Replaces the generic 3×2 card grid with an animated row list
  * that reveals a thumbnail image on hover.
  * All 10 original services preserved.
+ *
+ * Animations (GSAP ScrollTrigger):
+ * - Header: eyebrow + title from left, lead from right
+ * - Each row: slides in from left with stagger
+ * - Also row: fades up
  */
 const PRIMARY = [
   { title: 'Weight Training',    img: '/images/gym2.png', desc: 'Build strength with premium equipment and expert programming.' },
@@ -20,31 +26,32 @@ const PRIMARY = [
 const ALSO = ['Yoga', 'Zumba', 'Aerobics', 'Meditation'];
 
 const Services = () => {
-  const ref = useScrollReveal();
+  const ref = useGSAPReveal();
+  const settings = useContext(SiteSettingsContext);
 
   return (
     <section id="services" className="services" ref={ref}>
       <div className="section-container">
 
         {/* Asymmetric editorial header */}
-        <div className="services__header reveal">
-          <div className="services__header-left">
+        <div className="services__header">
+          <div className="services__header-left" data-reveal-left>
             <span className="section-eyebrow">What We Offer</span>
             <h2 className="services__title">Training<br />Programs</h2>
           </div>
-          <p className="services__lead">
+          <p className="services__lead" data-reveal-right>
             Expert coaching across every discipline — strength, conditioning,
             nutrition, and wellness. All under one roof.
           </p>
         </div>
 
-        {/* Editorial numbered list */}
-        <div className="services__list">
+        {/* Editorial numbered list — staggered */}
+        <div className="services__list" data-stagger-parent>
           {PRIMARY.map((s, i) => (
             <div
               key={s.title}
-              className="services__item reveal"
-              style={{ transitionDelay: `${i * 55}ms` }}
+              className="services__item"
+              data-stagger-child
             >
               <span className="services__item-num">
                 {String(i + 1).padStart(2, '0')}
@@ -67,13 +74,13 @@ const Services = () => {
         </div>
 
         {/* Also available row */}
-        <div className="services__also reveal">
+        <div className="services__also" data-reveal>
           <span className="services__also-label">Also:</span>
           {ALSO.map((s) => (
             <span key={s} className="services__also-tag">{s}</span>
           ))}
           <a
-            href="https://wa.link/z36oiv"
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to enquire about your training programs.`}
             target="_blank"
             rel="noopener noreferrer"
             className="services__enquire"

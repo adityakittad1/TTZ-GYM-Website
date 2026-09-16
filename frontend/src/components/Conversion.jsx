@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { MessageCircle, Star } from 'lucide-react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import useGSAPReveal from '../hooks/useGSAPReveal';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Conversion.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Conversion — Editorial testimonials + cinematic CTA.
- * Testimonials: horizontal quote layout (not 3 identical cards).
- * CTA: left-aligned, full-bleed background image.
- * All original content and links preserved exactly.
+ *
+ * Animations (GSAP ScrollTrigger):
+ * - Testimonials: stagger in from x + opacity
+ * - CTA bg image: subtle vertical parallax
+ * - CTA heading: word-by-word reveal (split by spaces, stagger)
+ * - CTA sub + buttons: fade in after heading
  */
 const TESTIMONIALS = [
   {
@@ -36,7 +44,34 @@ const Stars = () => (
 );
 
 const Conversion = () => {
-  const ref = useScrollReveal();
+  const ref = useGSAPReveal();
+  const settings = useContext(SiteSettingsContext);
+  const ctaBgRef  = useRef(null);
+  const ctaCtxRef = useRef(null);
+
+  // CTA background parallax
+  useEffect(() => {
+    if (!ctaBgRef.current) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    ctaCtxRef.current = gsap.context(() => {
+      gsap.to(ctaBgRef.current, {
+        y: '-8%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: ctaBgRef.current.closest('.conv__cta-section'),
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
+    });
+
+    return () => {
+      if (ctaCtxRef.current) ctaCtxRef.current.revert();
+    };
+  }, []);
 
   return (
     <section id="testimonials" className="conversion" ref={ref}>
@@ -44,7 +79,7 @@ const Conversion = () => {
       {/* ── Top: editorial testimonials ── */}
       <div className="conv__testimonials">
         <div className="section-container">
-          <div className="conv__header reveal">
+          <div className="conv__header" data-reveal>
             <div>
               <span className="section-eyebrow">Real Results</span>
               <h2 className="conv__title">What Our<br />Members Say</h2>
@@ -52,12 +87,12 @@ const Conversion = () => {
             <span className="conv__header-right">500+ members · 4+ years</span>
           </div>
 
-          <div className="conv__quotes">
+          <div className="conv__quotes" data-stagger-parent>
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={t.name}
-                className="conv__quote reveal"
-                style={{ transitionDelay: `${i * 80}ms` }}
+                className="conv__quote"
+                data-stagger-child
               >
                 <div>
                   <span className="conv__quote-mark" aria-hidden="true">"</span>
@@ -77,9 +112,9 @@ const Conversion = () => {
         </div>
       </div>
 
-      {/* ── Bottom: Cinematic CTA ── */}
+      {/* ── Bottom: Cinematic CTA with parallax bg ── */}
       <div className="conv__cta-section">
-        <div className="conv__cta-bg" aria-hidden="true">
+        <div className="conv__cta-bg" aria-hidden="true" ref={ctaBgRef}>
           <img
             src="/images/gym5.png"
             alt=""
@@ -90,17 +125,17 @@ const Conversion = () => {
           <div className="conv__cta-overlay" />
         </div>
 
-        <div className="conv__cta-content reveal">
+        <div className="conv__cta-content" data-stagger-parent>
           <h2 className="conv__cta-heading">
-            Your Stronger Self
-            <span className="conv__cta-accent">Starts Here.</span>
+            <span data-stagger-child>Your Stronger Self</span>
+            <span className="conv__cta-accent" data-stagger-child>Starts Here.</span>
           </h2>
-          <p className="conv__cta-sub">
+          <p className="conv__cta-sub" data-stagger-child>
             Stop waiting. Start transforming.
           </p>
-          <div className="conv__cta-actions">
+          <div className="conv__cta-actions" data-stagger-child>
             <a
-              href="https://wa.link/z36oiv"
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to book a free trial and start transforming.`}
               target="_blank"
               rel="noopener noreferrer"
               className="conv__btn-primary"
@@ -110,7 +145,7 @@ const Conversion = () => {
               Book a Free Trial
             </a>
             <a
-              href="https://wa.me/919028468563"
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I saw your website and would like to connect.`}
               target="_blank"
               rel="noopener noreferrer"
               className="conv__btn-ghost"

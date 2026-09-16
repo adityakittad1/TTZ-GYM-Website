@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'motion/react';
 import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Header.css';
 
@@ -24,12 +25,30 @@ const Header = () => {
   const [isScrolled, setIsScrolled]           = useState(false);
   const [utilityVisible, setUtilityVisible]   = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection]       = useState('home');
+  const [logoReady, setLogoReady]               = useState(false);
+
+  // Trigger logo entrance after mount (after preloader)
+  useEffect(() => {
+    const timer = setTimeout(() => setLogoReady(true), 2400);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       setIsScrolled(y > 80);
       setUtilityVisible(y <= 80);
+
+      // Active section tracking
+      const sections = ['home', 'about', 'services', 'trainers', 'membership', 'gallery', 'testimonials', 'contact'];
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.getBoundingClientRect().top <= 100) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -99,18 +118,24 @@ const Header = () => {
       >
         <div className="ttz-header__inner">
 
-          {/* Logo */}
+          {/* Logo — Motion spring entrance after preloader */}
           <button
             className="ttz-header__logo"
             onClick={() => scrollToSection('home')}
             aria-label="TTZ Fitness — scroll to top"
           >
-            <img
+            <motion.img
               src="https://customer-assets.emergentagent.com/job_8b66225e-2fe5-45f8-8090-ae5dbb7cc6d8/artifacts/g4rje3dy_a3.jpeg"
               alt="TTZ Fitness logo"
               className="ttz-header__logo-img"
               width="40"
               height="40"
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={logoReady
+                ? { scale: 1, opacity: 1 }
+                : { scale: 0.7, opacity: 0 }
+              }
+              transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
             />
             <div className="ttz-header__logo-text">
               <span className="ttz-header__logo-name">TTZ</span>
@@ -124,7 +149,7 @@ const Header = () => {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="ttz-header__nav-link"
+                className={`ttz-header__nav-link${activeSection === link.id ? ' ttz-header__nav-link--active' : ''}`}
               >
                 {link.label}
               </button>
@@ -133,7 +158,7 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <a
-            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to join now!`}
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to join and learn about membership options.`}
             target="_blank"
             rel="noopener noreferrer"
             className="ttz-header__cta"
@@ -196,7 +221,7 @@ const Header = () => {
 
           <div className="ttz-mobile-menu__footer">
             <a
-              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to join now!`}
+              href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to join and learn about membership options.`}
               target="_blank"
               rel="noopener noreferrer"
               className="ttz-mobile-menu__cta"

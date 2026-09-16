@@ -1,16 +1,25 @@
 import React, { useState, useContext } from 'react';
 import { Phone, MapPin, Instagram, MessageCircle, Clock, Heart } from 'lucide-react';
+import { motion } from 'motion/react';
 import { SiteSettingsContext } from '../context/SiteSettingsContext';
+import useGSAPReveal from '../hooks/useGSAPReveal';
 import './ContactFooter.css';
 
 /**
  * ContactFooter — Contact form + Footer merged into one dark section.
- * Replaces separate Contact section + separate Footer.
  * All original links and form functionality preserved exactly.
+ *
+ * Enhancements:
+ * - motion: form inputs animate border-color on focus
+ * - motion: social icons spring hover
+ * - motion: submit button spring tap
+ * - GSAP: form col from left, info col from right
  */
 const ContactFooter = () => {
   const settings = useContext(SiteSettingsContext);
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
+  const [focused, setFocused] = useState('');
+  const ref = useGSAPReveal();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,20 +30,26 @@ const ContactFooter = () => {
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      import('../lib/scrollInit').then(({ getLenis }) => {
+        const lenis = getLenis();
+        if (lenis) lenis.scrollTo(el);
+        else el.scrollIntoView({ behavior: 'smooth' });
+      }).catch(() => el.scrollIntoView({ behavior: 'smooth' }));
+    }
   };
 
   const NAV_LINKS = ['about', 'services', 'trainers', 'membership', 'gallery', 'testimonials'];
 
   return (
-    <footer id="contact" className="contact-footer">
+    <footer id="contact" className="contact-footer" ref={ref}>
 
       {/* ── Upper: Contact ── */}
       <div className="cf__contact">
         <div className="cf__contact-inner">
 
           {/* Form */}
-          <div className="cf__form-col">
+          <div className="cf__form-col" data-reveal-left>
             <span className="section-eyebrow">Get In Touch</span>
             <h2 className="cf__contact-title">Start Your Journey</h2>
             <form
@@ -45,39 +60,79 @@ const ContactFooter = () => {
               <div className="cf__row">
                 <div className="cf__field">
                   <label htmlFor="cf-name" className="cf__label">Full Name *</label>
-                  <input
+                  <motion.input
                     type="text" id="cf-name" name="name"
-                    className="cf__input" placeholder="Your name"
-                    value={form.name} onChange={onChange} required autoComplete="name"
+                    className="cf__input"
+                    placeholder="Your name"
+                    value={form.name}
+                    onChange={onChange}
+                    required
+                    autoComplete="name"
+                    onFocus={() => setFocused('name')}
+                    onBlur={() => setFocused('')}
+                    animate={{
+                      borderColor: focused === 'name'
+                        ? 'rgba(200,162,74,0.7)'
+                        : 'rgba(255,255,255,0.07)',
+                    }}
+                    transition={{ duration: 0.25 }}
                   />
                 </div>
                 <div className="cf__field">
                   <label htmlFor="cf-phone" className="cf__label">Phone *</label>
-                  <input
+                  <motion.input
                     type="tel" id="cf-phone" name="phone"
-                    className="cf__input" placeholder="Your number"
-                    value={form.phone} onChange={onChange} required autoComplete="tel"
+                    className="cf__input"
+                    placeholder="Your number"
+                    value={form.phone}
+                    onChange={onChange}
+                    required
+                    autoComplete="tel"
+                    onFocus={() => setFocused('phone')}
+                    onBlur={() => setFocused('')}
+                    animate={{
+                      borderColor: focused === 'phone'
+                        ? 'rgba(200,162,74,0.7)'
+                        : 'rgba(255,255,255,0.07)',
+                    }}
+                    transition={{ duration: 0.25 }}
                   />
                 </div>
               </div>
               <div className="cf__field">
                 <label htmlFor="cf-message" className="cf__label">Message (optional)</label>
-                <textarea
+                <motion.textarea
                   id="cf-message" name="message"
                   className="cf__textarea" rows="3"
                   placeholder="Your fitness goals..."
-                  value={form.message} onChange={onChange}
+                  value={form.message}
+                  onChange={onChange}
+                  onFocus={() => setFocused('message')}
+                  onBlur={() => setFocused('')}
+                  animate={{
+                    borderColor: focused === 'message'
+                      ? 'rgba(200,162,74,0.7)'
+                      : 'rgba(255,255,255,0.07)',
+                  }}
+                  transition={{ duration: 0.25 }}
                 />
               </div>
-              <button type="submit" className="cf__submit" id="contact-submit-btn">
+              <motion.button
+                type="submit"
+                className="cf__submit"
+                id="contact-submit-btn"
+                whileTap={{ scale: 0.97 }}
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
                 <MessageCircle size={16} />
                 Send via WhatsApp
-              </button>
+              </motion.button>
             </form>
           </div>
 
           {/* Info */}
-          <div className="cf__info-col">
+          <div className="cf__info-col" data-reveal-right>
 
             <div className="cf__info-item">
               <Phone size={16} className="cf__info-icon" />
@@ -93,7 +148,7 @@ const ContactFooter = () => {
               <div>
                 <div className="cf__info-label">WhatsApp</div>
                 <a
-                  href={`https://wa.me/${settings?.whatsappNumber}`}
+                  href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to get in touch.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cf__info-link"
@@ -175,15 +230,32 @@ const ContactFooter = () => {
           {/* Social + copyright */}
           <div className="cf__right">
             <div className="cf__socials">
-              <a href={settings?.instagramUrl} target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="Instagram">
+              <motion.a
+                href={settings?.instagramUrl}
+                target="_blank" rel="noopener noreferrer"
+                className="cf__social" aria-label="Instagram"
+                whileHover={{ y: -3, scale: 1.15 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              >
                 <Instagram size={16} />
-              </a>
-              <a href={`https://wa.me/${settings?.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="cf__social" aria-label="WhatsApp">
+              </motion.a>
+              <motion.a
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to connect with you.`}
+                target="_blank" rel="noopener noreferrer"
+                className="cf__social" aria-label="WhatsApp"
+                whileHover={{ y: -3, scale: 1.15 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              >
                 <MessageCircle size={16} />
-              </a>
-              <a href={`tel:${settings?.phoneMain}`} className="cf__social" aria-label="Phone">
+              </motion.a>
+              <motion.a
+                href={`tel:${settings?.phoneMain}`}
+                className="cf__social" aria-label="Phone"
+                whileHover={{ y: -3, scale: 1.15 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              >
                 <Phone size={16} />
-              </a>
+              </motion.a>
             </div>
             <p className="cf__copy">
               © 2026 TTZ FITNESS · Made with <Heart size={12} fill="#C9A84C" color="#C9A84C" /> by{' '}

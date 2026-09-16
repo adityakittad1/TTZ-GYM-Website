@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import './App.css';
@@ -12,6 +12,7 @@ import Hero from './components/Hero';
 // 8-section structure (down from 12+)
 import AboutStats    from './components/AboutStats';      // About + Stats merged
 import Services      from './components/Services';        // Editorial numbered list
+import LadiesOnly    from './components/LadiesOnly';      // Dedicated ladies section
 import TeamSection   from './components/TeamSection';     // WhyTTZ + Trainers merged
 import Membership    from './components/Membership';      // Pricing (compact)
 import Gallery       from './components/Gallery';         // Editorial mosaic
@@ -39,6 +40,7 @@ const MainSite = () => (
       <Hero />
       <AboutStats />
       <Services />
+      <LadiesOnly />
       <TeamSection />
       <Membership />
       <Gallery />
@@ -52,9 +54,6 @@ const MainSite = () => (
 /**
  * Whether to show the brand entrance on this load.
  * - Skip on /admin (no preloader in the admin panel)
- * - Skip if user prefers reduced motion AND we detect that preference
- *   at JS level (CSS handles the simplified animation too, but no need
- *   to run the timer-based JS at all for these users → instant site)
  */
 function shouldShowPreloader() {
   const isAdmin = window.location.pathname.startsWith('/admin');
@@ -64,6 +63,32 @@ function shouldShowPreloader() {
 
 function App() {
   const [preloaderDone, setPreloaderDone] = useState(!shouldShowPreloader());
+
+  const handlePreloaderComplete = () => {
+    setPreloaderDone(true);
+    // Initialize Lenis smooth scroll + wire GSAP ScrollTrigger
+    // Deferred so React has rendered the full DOM first
+    setTimeout(() => {
+      import('./lib/scrollInit').then(({ initLenis }) => {
+        initLenis();
+        // Refresh all ScrollTrigger positions after Lenis init
+        import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+          ScrollTrigger.refresh();
+        });
+      });
+    }, 100);
+  };
+
+  // On admin route, init Lenis immediately (no preloader)
+  useEffect(() => {
+    const isAdmin = window.location.pathname.startsWith('/admin');
+    if (isAdmin) {
+      import('./lib/scrollInit').then(({ initLenis }) => initLenis());
+    }
+    return () => {
+      import('./lib/scrollInit').then(({ destroyLenis }) => destroyLenis());
+    };
+  }, []);
 
   return (
     <SiteSettingsProvider>
@@ -76,7 +101,7 @@ function App() {
             3. When the curtain lifts the hero is already fully rendered
         */}
         {!preloaderDone && (
-          <Preloader onComplete={() => setPreloaderDone(true)} />
+          <Preloader onComplete={handlePreloaderComplete} />
         )}
 
         <Routes>

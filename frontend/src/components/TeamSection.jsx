@@ -1,12 +1,16 @@
-import React from 'react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import React, { useContext } from 'react';
+import useGSAPReveal from '../hooks/useGSAPReveal';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './TeamSection.css';
 
 /**
  * TeamSection — WhyTTZ + Trainers merged.
  * Left: dark editorial column with 3 numbered reasons.
  * Right: founder portraits with gradient overlays.
- * Layout: full-bleed split (no section-container wrapper).
+ *
+ * Animations (GSAP ScrollTrigger):
+ * - Left column: staggered reasons
+ * - Trainer images: clip-path wipe from bottom (cinematic reveal)
  */
 const REASONS = [
   {
@@ -39,23 +43,24 @@ const TRAINERS = [
 ];
 
 const TeamSection = () => {
-  const ref = useScrollReveal();
+  const ref = useGSAPReveal();
+  const settings = useContext(SiteSettingsContext);
 
   return (
     <section id="trainers" className="team-section" ref={ref}>
       <div className="team-section__inner">
 
-        {/* Left — Why TTZ */}
-        <div className="team-section__left reveal-left">
-          <span className="section-eyebrow">Why TTZ</span>
-          <h2 className="team-section__title">
+        {/* Left — Why TTZ, staggered */}
+        <div className="team-section__left" data-stagger-parent>
+          <span className="section-eyebrow" data-stagger-child>Why TTZ</span>
+          <h2 className="team-section__title" data-stagger-child>
             More Than
-            <span className="team-section__accent">A Gym.</span>
+            <span className="team-section__accent"> A Gym.</span>
           </h2>
 
           <div className="team-section__reasons">
             {REASONS.map((r, i) => (
-              <div key={r.heading} className="team-section__reason">
+              <div key={r.heading} className="team-section__reason" data-stagger-child>
                 <span className="team-section__reason-num">0{i + 1}</span>
                 <div>
                   <h3 className="team-section__reason-heading">{r.heading}</h3>
@@ -66,24 +71,25 @@ const TeamSection = () => {
           </div>
 
           <a
-            href="https://wa.link/z36oiv"
+            href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to join the TTZ family. Can you guide me?`}
             target="_blank"
             rel="noopener noreferrer"
             className="team-section__cta"
+            data-stagger-child
           >
             Join the Family
           </a>
         </div>
 
-        {/* Right — Trainers */}
-        <div className="team-section__right reveal-right">
-          <div className="team-section__trainers-header">
+        {/* Right — Trainers with clip-path reveal */}
+        <div className="team-section__right">
+          <div className="team-section__trainers-header" data-reveal>
             <span className="section-eyebrow">Meet the Founders</span>
           </div>
           <div className="team-section__trainers">
-            {TRAINERS.map((t) => (
-              <div key={t.name} className="team-section__trainer">
-                <div className="team-section__trainer-img-wrap">
+            {TRAINERS.map((t, i) => (
+              <div key={t.name} className="team-section__trainer" data-reveal data-delay={i * 0.15}>
+                <div className="team-section__trainer-img-wrap" data-reveal-clip>
                   <img
                     src={t.image}
                     alt={t.name}

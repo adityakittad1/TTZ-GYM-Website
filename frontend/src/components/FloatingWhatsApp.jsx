@@ -20,7 +20,7 @@ const FloatingWhatsApp = () => {
   return (
     <div className={`floating-wa ${visible ? 'floating-wa--visible' : ''}`}>
       <a
-        href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness, I would like to chat!`}
+        href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to know more about your gym.`}
         target="_blank"
         rel="noopener noreferrer"
         className="floating-wa__btn"

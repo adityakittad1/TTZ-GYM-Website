@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import useGSAPReveal from '../hooks/useGSAPReveal';
 import './Gallery.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Gallery — Full-width editorial mosaic.
- * Asymmetric header (title left, subtitle right).
- * Lightbox with keyboard navigation (Escape, arrow keys).
+ * Lightbox with keyboard navigation.
+ *
+ * Animations:
+ * - Header: fades in
+ * - Each mosaic cell: directional clip-path wipe (unique per cell)
  */
 const IMAGES = [
   { src: '/images/gym2.png', alt: 'TTZ Fitness — Main training floor with premium equipment' },
@@ -15,9 +22,53 @@ const IMAGES = [
   { src: '/images/gym5.png', alt: 'TTZ Fitness — Full facility overview' },
 ];
 
+// Clip-path reveal directions per cell
+const CELL_CLIPS = [
+  { from: 'inset(0 0 100% 0)', to: 'inset(0 0 0% 0)' },   // cell 0: bottom wipe
+  { from: 'inset(0 0 0 100%)', to: 'inset(0 0 0 0%)' },   // cell 1: right wipe
+  { from: 'inset(0 100% 0 0)', to: 'inset(0 0% 0 0)' },   // cell 2: left wipe
+  { from: 'inset(100% 0 0 0)', to: 'inset(0% 0 0 0)' },   // cell 3: top wipe
+  { from: 'inset(0 0 100% 0)', to: 'inset(0 0 0% 0)' },   // cell 4: bottom wipe
+];
+
 const Gallery = () => {
-  const ref = useScrollReveal();
+  const ref = useGSAPReveal();
+  const mosaicRef = useRef(null);
   const [lightboxIdx, setLightboxIdx] = useState(null);
+
+  // ── Per-cell directional clip-path reveals ──
+  useEffect(() => {
+    if (!mosaicRef.current) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ctx = gsap.context(() => {
+      const cells = mosaicRef.current.querySelectorAll('.gallery__cell');
+      cells.forEach((cell, i) => {
+        const clip = CELL_CLIPS[i];
+        if (prefersReduced) {
+          gsap.set(cell, { clipPath: clip.to });
+          return;
+        }
+        gsap.fromTo(
+          cell,
+          { clipPath: clip.from },
+          {
+            clipPath: clip.to,
+            duration: 1.0,
+            ease: 'power4.out',
+            delay: i * 0.08,
+            scrollTrigger: {
+              trigger: cell,
+              start: 'top 92%',
+              once: true,
+            },
+          }
+        );
+      });
+    }, mosaicRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const openLightbox = (idx) => setLightboxIdx(idx);
   const closeLightbox = () => setLightboxIdx(null);
@@ -34,7 +85,7 @@ const Gallery = () => {
     <section id="gallery" className="gallery" ref={ref}>
 
       {/* Asymmetric header — inside container */}
-      <div className="gallery__header section-container reveal">
+      <div className="gallery__header section-container" data-reveal>
         <div>
           <span className="section-eyebrow">The Space</span>
           <h2 className="gallery__title">Our<br />Facility</h2>
@@ -45,8 +96,8 @@ const Gallery = () => {
         </p>
       </div>
 
-      {/* Full-width mosaic grid */}
-      <div className="gallery__mosaic">
+      {/* Full-width mosaic grid — each cell has its own clip-path */}
+      <div className="gallery__mosaic" ref={mosaicRef}>
         {IMAGES.map((img, i) => (
           <button
             key={i}

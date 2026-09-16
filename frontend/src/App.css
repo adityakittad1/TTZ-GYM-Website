@@ -106,12 +106,26 @@ main {
   overflow: hidden;
 }
 
-.btn-primary::after {
+/* Shimmer sweep on hover */
+.btn-primary::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0);
-  transition: background var(--duration-fast) var(--ease-snap);
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+  transition: none;
+}
+
+.btn-primary:hover::before {
+  left: 160%;
+  transition: left 0.5s var(--ease-luxury);
 }
 
 .btn-primary:hover {

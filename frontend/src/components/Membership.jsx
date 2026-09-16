@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Check, Clock, Phone } from 'lucide-react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import { motion } from 'motion/react';
+import useGSAPReveal from '../hooks/useGSAPReveal';
+import { SiteSettingsContext } from '../context/SiteSettingsContext';
 import './Membership.css';
 
 /**
  * Membership — Horizontal table-style pricing.
  * All pricing data and phone/WhatsApp links preserved exactly.
+ *
+ * Enhancements:
+ * - motion: card whileHover spring lift (y: -6px)
+ * - motion: button whileTap scale press
+ * - GSAP ScrollTrigger: cards stagger in from below
  */
 const PLANS = [
   { duration: '1 Month',   price: '₹999',   bonus: null,            popular: false },
@@ -22,7 +29,8 @@ const FEATURES = [
 ];
 
 const Membership = () => {
-  const ref = useScrollReveal();
+  const ref = useGSAPReveal();
+  const settings = useContext(SiteSettingsContext);
 
   return (
     <section id="membership" className="membership" ref={ref}>
@@ -30,11 +38,11 @@ const Membership = () => {
 
         {/* Header — large display title + sub-copy */}
         <div className="membership__header">
-          <div className="membership__header-left reveal-left">
+          <div className="membership__header-left" data-reveal-left>
             <span className="section-eyebrow">Invest in Yourself</span>
             <h2 className="membership__title">Member&shy;ship</h2>
           </div>
-          <div className="membership__header-right reveal-right">
+          <div className="membership__header-right" data-reveal-right>
             <p className="membership__lead">
               Choose the plan that fits your journey. Every membership includes
               full access to all facilities, group classes, and nutrition guidance.
@@ -48,13 +56,17 @@ const Membership = () => {
           </div>
         </div>
 
-        {/* Plans — horizontal table */}
-        <div className="membership__grid">
+        {/* Plans — horizontal table, GSAP stagger + Motion hover */}
+        <div className="membership__grid" data-stagger-parent>
           {PLANS.map((plan, i) => (
-            <div
+            <motion.div
               key={plan.duration}
-              className={`membership__card reveal${plan.popular ? ' membership__card--popular' : ''}`}
-              style={{ transitionDelay: `${i * 70}ms` }}
+              className={`membership__card${plan.popular ? ' membership__card--popular' : ''}`}
+              data-stagger-child
+              whileHover={{
+                y: plan.popular ? -8 : -6,
+                transition: { type: 'spring', stiffness: 380, damping: 22 },
+              }}
             >
               {plan.popular && (
                 <div className="membership__badge">Best Value</div>
@@ -77,20 +89,21 @@ const Membership = () => {
                 ))}
               </ul>
 
-              <a
-                href="https://wa.link/z36oiv"
+              <motion.a
+                href={`https://wa.me/${settings?.whatsappNumber}?text=Hi TTZ Fitness! I'd like to book the ${plan.duration} membership plan.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`membership__btn${plan.popular ? ' membership__btn--primary' : ''}`}
+                whileTap={{ scale: 0.97 }}
               >
                 Book Now
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           ))}
         </div>
 
         {/* Bottom CTA — inline */}
-        <div className="membership__cta reveal">
+        <div className="membership__cta" data-reveal>
           <div className="membership__cta-left">
             <h3 className="membership__cta-heading">
               Crush Your 2026 Goals With TTZ Fitness

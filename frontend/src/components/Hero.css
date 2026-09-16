@@ -45,12 +45,13 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  animation: heroKenBurns 16s ease-in-out infinite alternate;
+  animation: heroKenBurns 18s ease-in-out infinite alternate;
+  transform-origin: center center;
 }
 
 @keyframes heroKenBurns {
-  from { transform: scale(1.06) translate(0, 0); }
-  to   { transform: scale(1.00) translate(-0.8%, -0.4%); }
+  from { transform: scale(1.08) translate(0, 0); }
+  to   { transform: scale(1.00) translate(-1%, -0.5%); }
 }
 
 /* Multi-layer overlays — cinematic, directional */
@@ -95,18 +96,7 @@
   padding: 0 var(--space-xl) 0 var(--space-2xl);
   max-width: 900px;
   width: 100%;
-  animation: heroFadeIn 1.4s var(--ease-luxury) 0.2s both;
-}
-
-@keyframes heroFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* GSAP controls entrance — no CSS animation */
 }
 
 /* Eyebrow above heading */
@@ -114,7 +104,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero__eyebrow-line {
@@ -133,20 +123,45 @@
   color: var(--gold);
 }
 
-/* Main title */
+/* Premium Launch Announcement */
+.hero__announcement {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 22px;
+  display: inline-block;
+  /* subtle visual separation without borders */
+  padding: 4px 0; 
+}
+
+/* Main title — flex column so each line is independently animated */
 .hero__title {
   font-family: var(--font-display);
   font-size: clamp(4rem, 10vw, 9.5rem);
   letter-spacing: 0.015em;
-  line-height: 0.90;
+  line-height: 0.95; /* Increased from 0.90 to prevent clipping */
   color: var(--text-primary);
   margin-bottom: 28px;
   text-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Each line is independently revealed by GSAP */
+.hero__title-line {
+  display: block;
+  overflow: visible;
+  padding-top: 0.05em; /* Extra space for font ascenders */
+  margin-top: -0.05em;
+  /* Visible overflow needed so translateY reveal doesn't clip */
 }
 
 .hero__title-accent {
   color: var(--gold);
-  display: block;
 }
 
 /* Tagline */
@@ -169,6 +184,7 @@
 }
 
 /* ── Vertical stat strip (right side) ── */
+/* GSAP controls entrance — no CSS animation */
 .hero__stat-strip {
   position: absolute;
   right: var(--space-2xl);
@@ -177,7 +193,6 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  animation: heroFadeIn 1.4s var(--ease-luxury) 0.6s both;
 }
 
 .hero__stat {

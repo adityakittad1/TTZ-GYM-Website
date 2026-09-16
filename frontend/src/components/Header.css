@@ -221,8 +221,13 @@
   color: var(--text-primary);
 }
 
-.ttz-header__nav-link:hover::after {
+.ttz-header__nav-link:hover::after,
+.ttz-header__nav-link--active::after {
   transform: translateX(-50%) scaleX(1);
+}
+
+.ttz-header__nav-link--active {
+  color: var(--gold);
 }
 
 /* ── Desktop CTA ── */

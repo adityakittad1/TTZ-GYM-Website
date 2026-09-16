@@ -164,6 +164,7 @@
   position: relative;
   height: 340px;
   overflow: hidden;
+  will-change: clip-path; /* GSAP clip-path wipe reveal */
 }
 
 .team-section__trainer-img {
