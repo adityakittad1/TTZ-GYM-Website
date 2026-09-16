@@ -23,8 +23,8 @@ import './Preloader.css';
  */
 
 /* Total timing constants (ms) */
-const EXIT_DELAY  = 1700;  // when curtain starts lifting — slightly longer for weight
-const DONE_DELAY  = 2350;  // when component unmounts
+const EXIT_DELAY  = 1400;  // when curtain starts lifting
+const DONE_DELAY  = 1900;  // when component unmounts
 
 const Preloader = ({ onComplete }) => {
   const [phase, setPhase] = useState('enter'); // 'enter' | 'exit'

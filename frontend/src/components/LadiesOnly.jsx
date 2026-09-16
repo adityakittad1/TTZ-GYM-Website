@@ -56,7 +56,7 @@ const LadiesOnly = () => {
               className="btn-primary ladies-only__btn"
             >
               <MessageCircle size={16} />
-              ENQUIRE ON WHATSAPP
+              ENQUIRE NOW ON WHATSAPP
             </a>
           </div>
         </div>
@@ -66,6 +66,8 @@ const LadiesOnly = () => {
             src="/images/gym2.png" 
             alt="Ladies Only Fitness" 
             className="ladies-only__image" 
+            loading="lazy"
+            decoding="async"
           />
           <div className="ladies-only__image-overlay"></div>
         </div>
