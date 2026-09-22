@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ttzfitness.com/sitemap.xml
+Sitemap: https://ttzfitness.in/sitemap.xml
